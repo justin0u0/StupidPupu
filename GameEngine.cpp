@@ -43,14 +43,49 @@ void GameEngine::InitAllegro5() {
 	al_start_timer(update_timer);
 }
 
-void GameEngine::Start() {
-	InitAllegro5();
-	al_clear_to_color(al_map_rgb(0,0,0));
-
-	al_flip_display();
-
-	al_rest(10.0);
+void GameEngine::startEventLoop() {
+	bool done = false;
+	/* Test */
+	int x = screenW / 2, y = screenH / 2;
+	/********/
+	while (!done) {
+		ALLEGRO_EVENT event;
+		al_wait_for_event(event_queue, &event);
+		switch(event.type) {
+		case ALLEGRO_EVENT_DISPLAY_CLOSE:
+			done = true;
+			break;
+		case ALLEGRO_EVENT_TIMER:
+			// Event for redrawing the display.
+			if (event.timer.source == update_timer)
+				// The redraw timer has ticked.
+				redraws++;
+			break;
+		}
+		case ALLEGRO_EVENT_KEY_UP:
+			switch(event.keyboard.keycode) {
+			case ALLEGRO_KEY_UP:
+				y -= 10;
+				break;
+			case ALLEGRO_KEY_DOWN:
+				y += 10;
+				break;
+			case ALLEGRO_KEY_LEFT:
+				x -= 10;
+				break;
+			case ALLEGRO_KEY_RIGHT:
+				x += 10;
+				break;
+			}
+			break;
+		al_draw_filled_rectangel(x, y, x + 30, y + 30, al_map_rgb(255, 0, 255));
+		al_flip_display();
+	}
 
 	al_destroy_display(display);
+}
+
+void GameEngine::Start() {
+	InitAllegro5();
 }
 

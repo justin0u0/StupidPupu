@@ -17,6 +17,8 @@ private:
 
 	// Initialize allegro 5, create window
 	void InitAllegro5();
+
+	void startEventLoop();
 public:
 	// Constructor
 	GameEngine(int fps, int screenW, int screenH, const char *title="Stupid Pupu");
