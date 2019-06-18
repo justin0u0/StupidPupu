@@ -48,6 +48,7 @@ void GameEngine::InitAllegro5() {
 
 void GameEngine::startEventLoop() {
 	bool done = false;
+	int redraws = 0;
 	/* Test */
 	int x = screenW / 2, y = screenH / 2;
 	/********/
@@ -64,8 +65,7 @@ void GameEngine::startEventLoop() {
 				// The redraw timer has ticked.
 				redraws++;
 			break;
-		}
-		case ALLEGRO_EVENT_KEY_UP:
+		case ALLEGRO_EVENT_KEY_DOWN:
 			switch(event.keyboard.keycode) {
 			case ALLEGRO_KEY_UP:
 				y -= 10;
@@ -81,13 +81,16 @@ void GameEngine::startEventLoop() {
 				break;
 			}
 			break;
-		al_draw_filled_rectangel(x, y, x + 30, y + 30, al_map_rgb(255, 0, 255));
+		}
+		al_draw_filled_rectangle(x, y, x + 30, y + 30, al_map_rgb(255, 0, 255));
 		al_flip_display();
+		al_clear_to_color(al_map_rgb(0, 0, 0));
 	}
 	al_destroy_display(display);
 }
 
 void GameEngine::Start() {
 	InitAllegro5();
+	startEventLoop();
 }
 
