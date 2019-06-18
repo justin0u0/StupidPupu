@@ -2,15 +2,14 @@
 #define GAME_ENGINE_HPP
 
 #include <allegro5/allegro.h>
-#include <string>
 
 class GameEngine {
 private:
 	// frames per second, screen width, screen height
 	int fps, screenW, screenH;
 	// game title
-	string title;
-
+	const char *title; 
+	
 	ALLEGRO_DISPLAY *display = nullptr;
 	ALLEGRO_TIMER *update_timer = nullptr;
 
@@ -20,7 +19,7 @@ private:
 	void InitAllegro5();
 public:
 	// Constructor
-	GameEngine(int fps, int screenW, int screenH, string title);
+	GameEngine(int fps, int screenW, int screenH, const char *title="Stupid Pupu");
 	// Start game loop
 	void Start();
 };

@@ -2,5 +2,5 @@
 
 int main() {
 	GameEngine game(60, 1024, 800);
-	game.start();
+	game.Start();
 }

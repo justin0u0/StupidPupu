@@ -1,7 +1,8 @@
 #include <allegro5/allegro_primitives.h>
 #include "GameEngine.hpp"
+#include <cstring>
 
-GameEngine::GameEngine(int fps, int screenW, int screenH, string titile): fps(fps), screenW(screenW), screenH(screenH), title(title) {
+GameEngine::GameEngine(int fps, int screenW, int screenH, const char *title): fps(fps), screenW(screenW), screenH(screenH) {
 }
 
 void GameEngine::InitAllegro5() {
@@ -9,7 +10,7 @@ void GameEngine::InitAllegro5() {
 		// error handler
 	}
 
-	if (!al_install_keyborad()) ;
+	if (!al_install_keyboard()) ;
 	if (!al_install_mouse()) ;
 
 	// set game display
@@ -43,7 +44,7 @@ void GameEngine::Start() {
 
 	al_flip_display();
 
-	al_rest(10.0);
+	al_rest(100000.0);
 
 	al_destroy_display(display);
 }
