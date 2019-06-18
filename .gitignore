@@ -1,1 +1,6 @@
 *.swp
+*.dev
+*.exe
+*.win
+*.layout
+*.o
