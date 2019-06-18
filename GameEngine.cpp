@@ -21,6 +21,7 @@ void GameEngine::InitAllegro5() {
 	// set game display
 	display = al_create_display(screenW, screenH);
 	if (!display) {
+		throw Allegro5Exception("failed to set game display");
 	}
 
 	al_set_window_title(display, title);
@@ -28,11 +29,13 @@ void GameEngine::InitAllegro5() {
 	// setup update timer
 	update_timer = al_create_timer(1.0f / fps);
 	if (!update_timer) {
+		throw Allegro5Exception("failed to set update timer");
 	}
 
 	// setup event queue
 	event_queue = al_create_event_queue();
 	if (!event_queue) {
+		throw Allegro5Exception("failed to set event queue");
 	}
 
 	al_register_event_source(event_queue, al_get_display_event_source(display));
