@@ -3,7 +3,7 @@
 #include "GameEngine.hpp"
 #include "Allegro5Exception.hpp"
 
-GameEngine::GameEngine(int fps, int screenW, int screenH, const char *title): fps(fps), screenW(screenW), screenH(screenH) {
+GameEngine::GameEngine(int fps, int screenW, int screenH, const char *title): fps(fps), screenW(screenW), screenH(screenH), title(title) {
 }
 
 void GameEngine::InitAllegro5() {
@@ -17,22 +17,25 @@ void GameEngine::InitAllegro5() {
 		throw Allegro5Exception("failed to install keyboard");
 	if (!al_install_mouse())
 		throw Allegro5Exception("failed to install mouse");
-
+		
 	// set game display
 	display = al_create_display(screenW, screenH);
 	if (!display) {
+		throw Allegro5Exception("failed to set game display");
 	}
-
+	
 	al_set_window_title(display, title);
 
 	// setup update timer
 	update_timer = al_create_timer(1.0f / fps);
 	if (!update_timer) {
+		throw Allegro5Exception("failed to set update timer");
 	}
 
 	// setup event queue
 	event_queue = al_create_event_queue();
 	if (!event_queue) {
+		throw Allegro5Exception("failed to set event queue");
 	}
 
 	al_register_event_source(event_queue, al_get_display_event_source(display));
@@ -81,7 +84,6 @@ void GameEngine::startEventLoop() {
 		al_draw_filled_rectangel(x, y, x + 30, y + 30, al_map_rgb(255, 0, 255));
 		al_flip_display();
 	}
-
 	al_destroy_display(display);
 }
 

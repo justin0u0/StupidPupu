@@ -8,7 +8,7 @@ private:
 	// frames per second, screen width, screen height
 	int fps, screenW, screenH;
 	// game title
-	const char *title; 
+	const char *title;
 	
 	ALLEGRO_DISPLAY *display = nullptr;
 	ALLEGRO_TIMER *update_timer = nullptr;
@@ -21,7 +21,7 @@ private:
 	void startEventLoop();
 public:
 	// Constructor
-	GameEngine(int fps, int screenW, int screenH, const char *title="Stupid Pupu");
+	GameEngine(int fps, int screenW, int screenH, const char *title);
 	// Start game loop
 	void Start();
 };
