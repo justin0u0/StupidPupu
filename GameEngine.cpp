@@ -9,7 +9,7 @@ void GameEngine::initAllegro5() {
 	}
 
 	display = al_create_display(screenW, screenH);
-	if (!display()) {
+	if (!display) {
 	}
 
 	al_clear_to_color(al_map_rgb(0,0,0));

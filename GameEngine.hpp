@@ -10,12 +10,12 @@ private:
 
 	ALLEGRO_DISPLAY *display = nullptr;
 
-	// Constructor
-	GameEngine(int fps, int screenW, int screenH) {}
 	// Initialize allegro 5, create window
-	void initAllegro5() {}
+	void initAllegro5();
 public:
+	// Constructor
+	GameEngine(int fps, int screenW, int screenH);
 	// Start game loop
-	void start() {}
-}
+	void start();
+};
 #endif
