@@ -1,5 +1,6 @@
-#include <allegro5/allegro.h>
+#include "GameEngine.hpp"
 
 int main() {
-	return 0;
+	GameEngine game(60, 1024, 800);
+	game.start();
 }
