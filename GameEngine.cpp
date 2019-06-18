@@ -1,9 +1,11 @@
 #include <allegro5/allegro_primitives.h>
+#include <iostream>
 
 #include "GameEngine.hpp"
 #include "Allegro5Exception.hpp"
 
-GameEngine::GameEngine(int fps, int screenW, int screenH, const char *title): fps(fps), screenW(screenW), screenH(screenH) {
+
+GameEngine::GameEngine(int fps, int screenW, int screenH, const char *title): fps(fps), screenW(screenW), screenH(screenH), title(title) {
 }
 
 void GameEngine::InitAllegro5() {
@@ -17,13 +19,13 @@ void GameEngine::InitAllegro5() {
 		throw Allegro5Exception("failed to install keyboard");
 	if (!al_install_mouse())
 		throw Allegro5Exception("failed to install mouse");
-
+		
 	// set game display
 	display = al_create_display(screenW, screenH);
 	if (!display) {
 		throw Allegro5Exception("failed to set game display");
 	}
-
+	
 	al_set_window_title(display, title);
 
 	// setup update timer
@@ -47,12 +49,13 @@ void GameEngine::InitAllegro5() {
 }
 
 void GameEngine::Start() {
+	std::cout << "\"" << title << "\"" << std::endl;
 	InitAllegro5();
 	al_clear_to_color(al_map_rgb(0,0,0));
-
+	
 	al_flip_display();
 
-	al_rest(10.0);
+	al_rest(5.0);
 
 	al_destroy_display(display);
 }
