@@ -2,10 +2,10 @@
 #include <chrono>
 #include "GameEngine.hpp"
 #include "Log.hpp"
+#include "IScene.hpp"
 
 GameEngine::GameEngine(int fps, int screenW, int screenH, const char *title): fps(fps), screenW(screenW), screenH(screenH), title(title) {
 }
-
 void GameEngine::InitAllegro5() {
 	// Initialize allegro
 	if (!al_init())
@@ -56,7 +56,6 @@ void GameEngine::InitAllegro5() {
 
 	al_start_timer(update_timer);
 }
-
 void GameEngine::StartEventLoop() {
 	bool done = false;
 	int redraws = 0;
@@ -92,23 +91,25 @@ void GameEngine::StartEventLoop() {
 		}
 	}
 }
-
 void GameEngine::Draw() {
 	al_flip_display();
 }
-
 void GameEngine::Update() {
 }
-
 void GameEngine::Destroy() {
 	al_destroy_timer();
 	al_destory_event_queue();
 	al_destroy_display();
 }
-
 void GameEngine::Start() {
 	InitAllegro5();
 	StartEventLoop();
 	Destroy();
+}
+int GetScreenWidth() {
+	return screenW;
+}
+int GetSreeenHeight() {
+	return screenH;
 }
 
