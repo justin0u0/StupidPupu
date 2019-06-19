@@ -3,17 +3,23 @@
 #include <iostream>
 
 enum LogType {
-	Info, Debug, Error
+	Info, Verbose, Debug, Error
 };
 
 class Log {
 private:
-	static const char* trans(LogType type);
+	const char* trans(LogType type);
+	bool VerboseMode = false;
 public:
+	LogType type;
 	explicit Log(LogType type=Debug);
 	~Log();
 	template<class T>
-	Log& operator<<(const T& msg);
+	Log& operator<<(const T& msg) {
+		if (type != Verbose || (type == Verbose && VerboseMode))
+			std::cout << msg;
+		return *this;
+	}
 };
 #endif
 

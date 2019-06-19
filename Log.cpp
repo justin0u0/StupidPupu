@@ -4,6 +4,7 @@
 const char* Log::trans(LogType type) {
 	switch(type) {
 	case Info: return "Info";
+	case Verbose: return "Verbose";
 	case Debug: return "Debug";
 	case Error: return "Error";
 	}
@@ -11,13 +12,9 @@ const char* Log::trans(LogType type) {
 }
 
 Log::Log(LogType type) {
-	std::cout << "[" << trans(type) << "]: ";
-}
-
-template <class T>
-Log& Log::operator<<(const T& msg){
-	std::cout << msg;
-	return *this;
+	this->type = type;
+	if (type != Verbose || (type == Verbose && VerboseMode))
+		std::cout << "[" << trans(type) << "]: ";
 }
 
 Log::~Log() {
