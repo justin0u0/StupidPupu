@@ -2,13 +2,13 @@
 #include <chrono>
 #include "GameEngine.hpp"
 #include "Log.hpp"
+#include "IScene.hpp"
 
 float x, y;
 bool key_state[ALLEGRO_KEY_MAX];
 
 GameEngine::GameEngine(int fps, int screenW, int screenH, const char *title): fps(fps), screenW(screenW), screenH(screenH), title(title) {
 }
-
 void GameEngine::InitAllegro5() {
 	x = screenW / 2.0;
 	y = screenH / 2.0;
@@ -61,7 +61,6 @@ void GameEngine::InitAllegro5() {
 
 	al_start_timer(update_timer);
 }
-
 void GameEngine::StartEventLoop() {
 	bool done = false;
 	int redraws = 0;
@@ -114,13 +113,11 @@ void GameEngine::StartEventLoop() {
 		}
 	}
 }
-
 void GameEngine::Draw() {
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	al_draw_filled_rectangle(x, y, x + 50, y + 50, al_map_rgb(255, 150, 170));
 	al_flip_display();
 }
-
 void GameEngine::Update(float deltaTime) {
 	if (key_state[ALLEGRO_KEY_UP])
 		y -= 30 * deltaTime;
@@ -131,16 +128,35 @@ void GameEngine::Update(float deltaTime) {
 	if (key_state[ALLEGRO_KEY_LEFT])
 		x -= 30 * deltaTime;
 }
-
 void GameEngine::Destroy() {
 	al_destroy_timer(update_timer);
 	al_destroy_event_queue(event_queue);
 	al_destroy_display(display);
 }
-
-void GameEngine::Start() {
+void GameEngine::Start(int fps, int screenW, int screenH, const char *title, const char *first_scene)
+	: fps(fps), screenW(screenW), screenH(screenH), title(title) {
+	Log(Info) << "Game Initializeing ...";
+	if (!scenes.count(first_scene))
+		Log(Error) << "Scene: " << first_scene << " has not been added yet";
+	active_scene = scenes[first_scene];
 	InitAllegro5();
+	Log(Info) << "Game Initialized";
 	StartEventLoop();
 	Destroy();
+}
+void AddNewScene(const std::string name, IScene* scene) {
+	if (scenes.count(name))
+		Log(Error) << "Cannot add scene with the same name";
+	scenes[name] = scene;
+}
+int GetScreenWidth() {
+	return screenW;
+}
+int GetSreeenHeight() {
+	return screenH;
+}
+GameEngine& GameEngine::GetInstance() {
+	static GameEngine instance;
+	return instance;
 }
 

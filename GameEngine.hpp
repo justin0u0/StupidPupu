@@ -2,6 +2,8 @@
 #define GAME_ENGINE_HPP
 
 #include <allegro5/allegro.h>
+#include <cstring>
+#include <unordered_map>
 
 class GameEngine final {
 private:
@@ -9,10 +11,16 @@ private:
 	int fps, screenW, screenH; //reserveSamples{}
 	// game title
 	const char *title;
-	
+	// allegro resource
 	ALLEGRO_DISPLAY *display = nullptr;
 	ALLEGRO_TIMER *update_timer = nullptr;
 	ALLEGRO_EVENT_QUEUE *event_queue = nullptr;
+	// scenes
+	std::unordered_map<std::string, IScene *> scenes;
+	// active scene
+	IScene *active_scene;
+	// next scene
+	std::string next_scene;
 
 	// Initialize allegro 5, create window
 	void InitAllegro5();
@@ -22,9 +30,19 @@ private:
 	void Destroy();
 public:
 	// Constructor
-	GameEngine(int fps, int screenW, int screenH, const char *title);
+	explicit GameEngine() = default;
+	// Copy constructor is deleted
+	GameEngine& (GameEngine const&) = delete;
+	// Copy assignment is deleted
+	GameEngine& operator=(GameEngine const&) = delete;
 	// Start game loop
-	void Start();
+	void Start(int fps, int screenW, int screenH, const char *title, const char *first_scene);
+	// Add a new scene to game
+	void AddNewScene(const std::string name, IScene* scene);
+	// Screen width
+	int GetScreenWidth();
+	// Screen height
+	int GetScreenHeight();
 };
 #endif
 

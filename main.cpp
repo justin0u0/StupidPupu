@@ -3,7 +3,9 @@
 #include "LOG.hpp"
 
 int main() {
-	GameEngine game(60, 1024, 800, "Stupid Pupu");
-	game.Start();
+	GameEngine &game = GameEngine::GetInstance();
+	game.AddNewScene("start", nullptr);
+	game.Start(60, 1536, 960, "StupidPupu", "start");
+	return 0;
 }
 
