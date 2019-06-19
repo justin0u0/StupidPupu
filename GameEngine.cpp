@@ -1,4 +1,5 @@
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_image.h>
 #include <chrono>
 #include "GameEngine.hpp"
 #include "Log.hpp"
@@ -16,16 +17,8 @@ void GameEngine::InitAllegro5() {
 	// Initialize addon
 	if (!al_init_primitives_addon())
 		Log(Error) << "failed to initialize primitives addon";
-//	if (!al_init_ttf_addon())
-//		throw Allegro5Exception("failed to initialize ttf add-on");
-//	if (!al_init_image_addon())
-//		throw Allegro5Exception("failed to initialize image add-on");
-//	if (!al_inatall_audio())
-//		throw Allegro5Exception("failed to install audio add-on");
-//	if (!al_init_acodec_addon())
-//		throw Allegro5Exception("failed to initialize audio codec add-on");
-//	if (!al_reserve_samples(reserveSamples))
-//		throw Allegro5Exception("failed to reserve samples");
+	if (!al_init_image_addon())
+		Log(Error) << "failed to initialize image addon";
 
 	if (!al_install_keyboard())
 		Log(Error) << "failed to install keyboard";
