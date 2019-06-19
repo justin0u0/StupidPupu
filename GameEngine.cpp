@@ -1,7 +1,7 @@
 #include <allegro5/allegro_primitives.h>
-
+#include <chrono>
 #include "GameEngine.hpp"
-#include "LOG.hpp"
+#include "Log.hpp"
 
 GameEngine::GameEngine(int fps, int screenW, int screenH, const char *title): fps(fps), screenW(screenW), screenH(screenH), title(title) {
 }
@@ -13,7 +13,6 @@ void GameEngine::InitAllegro5() {
 	// Initialize addon
 	if (!al_init_primitives_addon())
 		Log(Error) << ("failed to initialize primitives addon");
-
 //	if (!al_init_ttf_addon())
 //		throw Allegro5Exception("failed to initialize ttf add-on");
 //	if (!al_init_image_addon())
@@ -24,6 +23,7 @@ void GameEngine::InitAllegro5() {
 //		throw Allegro5Exception("failed to initialize audio codec add-on");
 //	if (!al_reserve_samples(reserveSamples))
 //		throw Allegro5Exception("failed to reserve samples");
+
 	if (!al_install_keyboard())
 		Log(Error) << ("failed to install keyboard");
 	if (!al_install_mouse())
@@ -57,14 +57,12 @@ void GameEngine::InitAllegro5() {
 	al_start_timer(update_timer);
 }
 
-void GameEngine::startEventLoop() {
+void GameEngine::StartEventLoop() {
 	bool done = false;
 	int redraws = 0;
-	/* Test */
-	int x = screenW / 2, y = screenH / 2;
-	/********/
+	ALLEGRO_EVENT event;
+	auto timestamp = std::chrono::steady_clock::now();
 	while (!done) {
-		ALLEGRO_EVENT event;
 		al_wait_for_event(event_queue, &event);
 		switch(event.type) {
 			case ALLEGRO_EVENT_DISPLAY_CLOSE:
@@ -77,31 +75,40 @@ void GameEngine::startEventLoop() {
 					redraws++;
 				break;
 			case ALLEGRO_EVENT_KEY_DOWN:
-				switch(event.keyboard.keycode) {
-					case ALLEGRO_KEY_UP:
-						y -= 10;
-						break;
-					case ALLEGRO_KEY_DOWN:
-						y += 10;
-						break;
-					case ALLEGRO_KEY_LEFT:
-						x -= 10;
-						break;
-					case ALLEGRO_KEY_RIGHT:
-						x += 10;
-						break;
-				}
 				break;
 		}
-		al_draw_filled_rectangle(x, y, x + 30, y + 30, al_map_rgb(255, 0, 255));
-		al_flip_display();
-		al_clear_to_color(al_map_rgb(0, 0, 0));
+		// Redraw the scene.
+		if (redraws > 0 && al_is_event_queue_empty(event_queue)) {
+			if (redraws > 1)
+				LOG(Info) << redraws - 1 << " frame(s) dropped";
+			// Calculate the timeElapsed and update the timestamp.
+			auto nextTimestamp = std::chrono::steady_clock::now();
+			std::chrono::duration<float> timeElapsed = nextTimestamp - timestamp;
+			timestamp = nextTimestamp;
+			// Update and draw the next frame.
+			Update(timeElapsed.count());
+			Draw();
+			redraws = 0;
+		}
 	}
-	al_destroy_display(display);
+}
+
+void GameEngine::Draw() {
+	al_flip_display();
+}
+
+void GameEngine::Update() {
+}
+
+void GameEngine::Destroy() {
+	al_destroy_timer();
+	al_destory_event_queue();
+	al_destroy_display();
 }
 
 void GameEngine::Start() {
 	InitAllegro5();
-	startEventLoop();
+	StartEventLoop();
+	Destroy();
 }
 
