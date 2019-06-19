@@ -11,8 +11,8 @@ public:
 	Point size;
 	Point anchor;
 	virtual ~IObject() = default;
-	IObject(const IObject& other) = default;
-	IObject& operator=(IObject const&) = default;
+	IObject(const IObject&) = default;
+	IObject& operator=(const IObject&) = default;
 	virtual void Draw() const;
 	virtual void Update(float deltaTime);
 };
