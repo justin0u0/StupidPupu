@@ -6,7 +6,7 @@
 class GameEngine {
 private:
 	// frames per second, screen width, screen height
-	int fps, screenW, screenH;
+	int fps, screenW, screenH; //reserveSamples{}
 	// game title
 	const char *title;
 	
@@ -17,13 +17,12 @@ private:
 
 	// Initialize allegro 5, create window
 	void InitAllegro5();
-
-	void startEventLoop();
 public:
 	// Constructor
 	GameEngine(int fps, int screenW, int screenH, const char *title);
 	// Start game loop
 	void Start();
+	void startEventLoop();
 };
 #endif
 
