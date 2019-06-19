@@ -4,7 +4,8 @@
 #include <allegro5/allegro.h>
 #include <cstring>
 #include <unordered_map>
-
+#include "IScene.hpp"
+ 
 class GameEngine final {
 private:
 	// frames per second, screen width, screen height
@@ -32,7 +33,7 @@ public:
 	// Constructor
 	explicit GameEngine() = default;
 	// Copy constructor is deleted
-	GameEngine& (GameEngine const&) = delete;
+	GameEngine(GameEngine const&) = delete;
 	// Copy assignment is deleted
 	GameEngine& operator=(GameEngine const&) = delete;
 	// Start game loop
@@ -40,9 +41,11 @@ public:
 	// Add a new scene to game
 	void AddNewScene(const std::string name, IScene* scene);
 	// Screen width
-	int GetScreenWidth();
+	int GetScreenWidth() const;
 	// Screen height
-	int GetScreenHeight();
+	int GetScreenHeight() const;
+	// function to retrieve instance and supports lazy initlalization
+	static GameEngine& GetInstance();
 };
 #endif
 

@@ -1,6 +1,6 @@
 #include "GameEngine.hpp"
 #include <iostream>
-#include "LOG.hpp"
+#include "Log.hpp"
 
 int main() {
 	GameEngine &game = GameEngine::GetInstance();
