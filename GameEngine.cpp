@@ -101,15 +101,30 @@ void GameEngine::Destroy() {
 	al_destory_event_queue();
 	al_destroy_display();
 }
-void GameEngine::Start() {
+void GameEngine::Start(int fps, int screenW, int screenH, const char *title, const char *first_scene)
+	: fps(fps), screenW(screenW), screenH(screenH), title(title) {
+	Log(Info) << "Game Initializeing ...";
+	if (!scenes.count(first_scene))
+		Log(Error) << "Scene: " << first_scene << " has not been added yet";
+	active_scene = scenes[first_scene];
 	InitAllegro5();
+	Log(Info) << "Game Initialized";
 	StartEventLoop();
 	Destroy();
+}
+void AddNewScene(const std::string name, IScene* scene) {
+	if (scenes.count(name))
+		Log(Error) << "Cannot add scene with the same name";
+	scenes[name] = scene;
 }
 int GetScreenWidth() {
 	return screenW;
 }
 int GetSreeenHeight() {
 	return screenH;
+}
+GameEngine& GameEngine::GetInstance() {
+	static GameEngine instance;
+	return instance;
 }
 
