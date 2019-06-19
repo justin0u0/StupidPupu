@@ -8,8 +8,8 @@ float x, y;
 bool key_state[ALLEGRO_KEY_MAX];
 
 void GameEngine::InitAllegro5() {
-	x = screenW / 2.0;
-	y = screenH / 2.0;
+	x = 50.0;
+	y = 50.0;
 	// Initialize allegro
 	if (!al_init())
 		Log(Error) << ("failed to initialize allegro");
@@ -113,7 +113,7 @@ void GameEngine::StartEventLoop() {
 }
 void GameEngine::Draw() {
 	al_clear_to_color(al_map_rgb(0, 0, 0));
-	al_draw_filled_rectangle(x, y, x + 50, y + 50, al_map_rgb(255, 150, 170));
+	al_draw_filled_rectangle(x, y, x + 800, y + 800, al_map_rgb(255, 150, 170));
 	al_flip_display();
 }
 void GameEngine::Update(float deltaTime) {
