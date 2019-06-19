@@ -3,10 +3,15 @@
 #include "GameEngine.hpp"
 #include "Log.hpp"
 
+float x, y;
+bool key_state[ALLEGRO_KEY_MAX];
+
 GameEngine::GameEngine(int fps, int screenW, int screenH, const char *title): fps(fps), screenW(screenW), screenH(screenH), title(title) {
 }
 
 void GameEngine::InitAllegro5() {
+	x = screenW / 2.0;
+	y = screenH / 2.0;
 	// Initialize allegro
 	if (!al_init())
 		Log(Error) << ("failed to initialize allegro");
@@ -75,12 +80,29 @@ void GameEngine::StartEventLoop() {
 					redraws++;
 				break;
 			case ALLEGRO_EVENT_KEY_DOWN:
+				key_state[event.keyboard.keycode] = true;
+//				switch(event.keyboard.keycode) {
+//		        case ALLEGRO_KEY_UP:
+//           			y -= 10;
+//                  	break;
+//             	case ALLEGRO_KEY_DOWN:
+//                    y += 10;
+//                    break;
+//               	case ALLEGRO_KEY_LEFT:
+//                    x -= 10;
+//                    break;
+//               	case ALLEGRO_KEY_RIGHT:
+//                   x += 10;
+//                   break;
+				break;
+			case ALLEGRO_EVENT_KEY_UP:
+				key_state[event.keyboard.keycode] = false;
 				break;
 		}
 		// Redraw the scene.
 		if (redraws > 0 && al_is_event_queue_empty(event_queue)) {
 			if (redraws > 1)
-				LOG(Info) << redraws - 1 << " frame(s) dropped";
+				Log(Info) << redraws - 1 << " frame(s) dropped";
 			// Calculate the timeElapsed and update the timestamp.
 			auto nextTimestamp = std::chrono::steady_clock::now();
 			std::chrono::duration<float> timeElapsed = nextTimestamp - timestamp;
@@ -94,16 +116,26 @@ void GameEngine::StartEventLoop() {
 }
 
 void GameEngine::Draw() {
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+	al_draw_filled_rectangle(x, y, x + 50, y + 50, al_map_rgb(255, 150, 170));
 	al_flip_display();
 }
 
-void GameEngine::Update() {
+void GameEngine::Update(float deltaTime) {
+	if (key_state[ALLEGRO_KEY_UP])
+		y -= 30 * deltaTime;
+	if (key_state[ALLEGRO_KEY_DOWN])
+		y += 30 * deltaTime;
+	if (key_state[ALLEGRO_KEY_RIGHT])
+		x += 30 * deltaTime;
+	if (key_state[ALLEGRO_KEY_LEFT])
+		x -= 30 * deltaTime;
 }
 
 void GameEngine::Destroy() {
-	al_destroy_timer();
-	al_destory_event_queue();
-	al_destroy_display();
+	al_destroy_timer(update_timer);
+	al_destroy_event_queue(event_queue);
+	al_destroy_display(display);
 }
 
 void GameEngine::Start() {
