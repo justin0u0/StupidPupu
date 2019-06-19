@@ -1,6 +1,7 @@
 #ifndef LOG_HPP
 #define LOG_HPP
 #include <iostream>
+#include <stdexcept>
 
 enum LogType {
 	Info, Verbose, Debug, Error
