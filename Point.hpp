@@ -1,6 +1,7 @@
 #ifndef POINT_HPP
 #define POINT_HPP
 
+// Can be used as 2D coordinate point or 2D vector
 struct Point {
 	float x, y;
 	explicit Point();

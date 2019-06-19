@@ -13,5 +13,8 @@ public:
 	virtual ~IObject() = default;
 	IObject(const IObject& other) = default;
 	IObject& operator=(IObject const&) = default;
+	virtual void Draw() const;
+	virtual void Update(float deltaTime);
 };
 #endif
+

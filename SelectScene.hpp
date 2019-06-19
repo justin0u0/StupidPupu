@@ -3,6 +3,7 @@
 
 class SelectScene final : public IScene {
 private:
+	
 };
 #endif
 
