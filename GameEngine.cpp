@@ -9,13 +9,13 @@ bool key_state[ALLEGRO_KEY_MAX];
 
 void GameEngine::InitAllegro5() {
 	x = 50.0;
-	y = 50.0;
+	y = 50.0;;
 	// Initialize allegro
 	if (!al_init())
-		Log(Error) << ("failed to initialize allegro");
+		Log(Error) << "failed to initialize allegro";
 	// Initialize addon
 	if (!al_init_primitives_addon())
-		Log(Error) << ("failed to initialize primitives addon");
+		Log(Error) << "failed to initialize primitives addon";
 //	if (!al_init_ttf_addon())
 //		throw Allegro5Exception("failed to initialize ttf add-on");
 //	if (!al_init_image_addon())
@@ -28,14 +28,14 @@ void GameEngine::InitAllegro5() {
 //		throw Allegro5Exception("failed to reserve samples");
 
 	if (!al_install_keyboard())
-		Log(Error) << ("failed to install keyboard");
+		Log(Error) << "failed to install keyboard";
 	if (!al_install_mouse())
-		Log(Error) << ("failed to install mouse");
+		Log(Error) << "failed to install mouse";
 
 	// set game display
 	display = al_create_display(screenW, screenH);
 	if (!display) {
-		Log(Error) << ("failed to set game display");
+		Log(Error) << "failed to set game display";
 	}
 
 	al_set_window_title(display, title);
@@ -43,13 +43,13 @@ void GameEngine::InitAllegro5() {
 	// setup update timer
 	update_timer = al_create_timer(1.0f / fps);
 	if (!update_timer) {
-		Log(Error) << ("failed to set update timer");
+		Log(Error) << "failed to set update timer";
 	}
 
 	// setup event queue
 	event_queue = al_create_event_queue();
 	if (!event_queue) {
-		Log(Error) << ("failed to set event queue");
+		Log(Error) << "failed to set event queue";
 	}
 
 	al_register_event_source(event_queue, al_get_display_event_source(display));
@@ -78,19 +78,6 @@ void GameEngine::StartEventLoop() {
 				break;
 			case ALLEGRO_EVENT_KEY_DOWN:
 				key_state[event.keyboard.keycode] = true;
-//				switch(event.keyboard.keycode) {
-//		        case ALLEGRO_KEY_UP:
-//           			y -= 10;
-//                  	break;
-//             	case ALLEGRO_KEY_DOWN:
-//                    y += 10;
-//                    break;
-//               	case ALLEGRO_KEY_LEFT:
-//                    x -= 10;
-//                    break;
-//               	case ALLEGRO_KEY_RIGHT:
-//                   x += 10;
-//                   break;
 				break;
 			case ALLEGRO_EVENT_KEY_UP:
 				key_state[event.keyboard.keycode] = false;
@@ -99,7 +86,7 @@ void GameEngine::StartEventLoop() {
 		// Redraw the scene.
 		if (redraws > 0 && al_is_event_queue_empty(event_queue)) {
 			if (redraws > 1)
-				Log(Info) << redraws - 1 << " frame(s) dropped";
+				Log(Verbose) << redraws - 1 << " frame(s) dropped";
 			// Calculate the timeElapsed and update the timestamp.
 			auto nextTimestamp = std::chrono::steady_clock::now();
 			std::chrono::duration<float> timeElapsed = nextTimestamp - timestamp;
