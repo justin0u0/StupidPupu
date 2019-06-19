@@ -13,10 +13,7 @@ public:
 	explicit Log(LogType type=Debug);
 	~Log();
 	template<class T>
-	Log& operator<<(const T& msg) {
-	std::cout << msg;
-	return *this;
-}
+	Log& operator<<(const T& msg);
 };
 #endif
 
