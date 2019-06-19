@@ -6,6 +6,8 @@
 #include <unordered_map>
 #include "Log.hpp"
 
+// Each IScene has an loader
+// Load Image, Sounds, Fonts
 class Loader final {
 private:
 	const std::string bitmap_prefix = "./assets/images/";
