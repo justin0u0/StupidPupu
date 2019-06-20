@@ -6,7 +6,7 @@
 class IScene {
 protected:
 	// IScene can only not instantiated directed
-	explicit IScene();
+	explicit IScene() = default;
 public:
 	// Copy constructor is deleted
 	IScene(IScene const&) = delete;
@@ -14,7 +14,6 @@ public:
 	IScene& operator=(IScene const&) = delete;
 	// The default virtual destructor to support polymorphism destruction
 	virtual ~IScene() = default;
-	Loader *loader;
 	virtual void Initialize() = 0;
 	virtual void Terminate() = 0;
 	void Draw() const;
