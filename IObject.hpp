@@ -17,6 +17,8 @@ public:
 	IObject& operator=(const IObject&) = default;
 	virtual void Draw() const;
 	virtual void Update(float deltaTime);
+	Point LeftUpCorner() const;
+	Point RightDownCorner() const;
 };
 #endif
 

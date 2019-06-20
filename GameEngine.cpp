@@ -34,7 +34,7 @@ void GameEngine::InitAllegro5() {
 	if (!al_install_mouse())
 		Log(Error) << "failed to install mouse";
 
-	rabbit = new Image("rabbit.png", x, y, 200, 200);
+	rabbit = new Image("rabbit.png", x, y);
 	
 	// set game display
 	display = al_create_display(screenW, screenH);

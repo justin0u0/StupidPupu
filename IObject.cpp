@@ -11,3 +11,13 @@ void IObject::Draw() const {
 void IObject::Update(float deltaTime) {
 }
 
+Point IObject::LeftUpCorner() const{
+	Point p(position.x - anchor.x * size.x, position.y - anchor.y * size.y);
+	return p;
+} 
+
+Point IObject::RightDownCorner() const{
+	Point p(position.x + (1 - anchor.x) * size.x, position.y + (1 - anchor.y) * size.y);
+	return p;
+}
+
