@@ -10,3 +10,4 @@ void IObject::Draw() const {
 
 void IObject::Update(float deltaTime) {
 }
+
