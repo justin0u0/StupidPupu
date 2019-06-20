@@ -2,8 +2,9 @@
 #define ISCENE_HPP
 
 #include "Loader.hpp"
+#include "IControl.hpp"
 
-class IScene {
+class IScene : public IControl {
 protected:
 	// IScene can only not instantiated directed
 	explicit IScene() = default;
