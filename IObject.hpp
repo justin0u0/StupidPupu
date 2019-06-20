@@ -8,7 +8,7 @@ protected:
 	explicit IObject() = default;
 	explicit IObject(float x, float y, float w=0, float h=0, float anchorX=0, float anchorY=0);
 public:
-	bool visible = false;
+	bool visible = true;
 	Point position;
 	Point size;
 	Point anchor;
