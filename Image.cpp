@@ -27,7 +27,7 @@ Image::Image(std::string img, float x, float y, float w, float h, float anchorX,
 // chamge the image's position and size
 void Image::Draw() const {
 	al_draw_scaled_bitmap(bmp, 0, 0, GetBitmapWidth(), GetBitmapHeight()
-		, position.x - anchor.x * GetBitmapHeight()
+		, position.x - anchor.x * GetBitmapWidth()
 		, position.y - anchor.y * GetBitmapHeight()
 		, size.x, size.y, 0);
 }
