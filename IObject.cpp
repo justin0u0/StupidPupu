@@ -1,0 +1,8 @@
+#include "Point.hpp"
+#include "IObject.hpp"
+
+IOBject::IObject(float x, float y, float w, float h, float anchorX, float anchorY) :
+	Position(Point(x, y)), Size(Point(w, h)), Anchor(Point(anchorX, anchorY)) {}
+	
+void IObject::Draw() const {}
+void IObject::Update(float deltaTime) {}
