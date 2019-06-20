@@ -12,7 +12,9 @@
 class GameEngine final {
 private:
 	// frames per second, screen width, screen height
-	int fps, screenW, screenH; //reserveSamples{}
+	int fps, screenW, screenH;
+	// maximum ammount of samples that can be played simultaneously
+	int reserve_samples;
 	// game title
 	const char *title;
 	// allegro resource
@@ -40,7 +42,7 @@ public:
 	// Copy assignment is deleted
 	GameEngine& operator=(GameEngine const&) = delete;
 	// Start game loop
-	void Start(int fps, int screenW, int screenH, const char* title, const std::string& first_scene);
+	void Start(int fps, int screenW, int screenH, int reserve_samples, const char* title, const std::string& first_scene);
 	// Add a new scene to game
 	void AddNewScene(const std::string& name, IScene* scene);
 	// Setter for next_scene

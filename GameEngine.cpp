@@ -1,9 +1,9 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
-//#incldue <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include <chrono>
-
 #include "GameEngine.hpp"
 #include "Log.hpp"
 #include "IScene.hpp"
@@ -28,7 +28,12 @@ void GameEngine::InitAllegro5() {
 		Log(Error) << "failed to initialize font addon";
 	if (!al_init_ttf_addon())
 		Log(Error) << "failed to initialize ttf addon";
-	
+	if (!al_init_acodec_addon())
+		Log(Error) << "failed to initialize audio codec addon";
+	if (!al_install_audio())
+		Log(Error) << "failed to install audio";
+	if (!al_reserve_samples(reserve_samples))
+		Log(Error) << "failed to reserve samples";
 	if (!al_install_keyboard())
 		Log(Error) << "failed to install keyboard";
 	if (!al_install_mouse())
@@ -179,11 +184,12 @@ void GameEngine::Destroy() {
 	al_destroy_event_queue(event_queue);
 	al_destroy_display(display);
 }
-void GameEngine::Start(int fps, int screenW, int screenH, const char *title, const std::string& first_scene) {
+void GameEngine::Start(int fps, int screenW, int screenH, int reserve_samples, const char *title, const std::string& first_scene) {
 	Log(Info) << "Initializeing ...";
 	this->fps = fps;
 	this->screenW = screenW;
 	this->screenH = screenH;
+	this->reserve_samples = reserve_samples;
 	this->title = title;
 	if (!scenes.count(first_scene))
 		Log(Error) << "Scene: " << first_scene << " has not been added yet";
