@@ -1,6 +1,8 @@
 #include "Loader.hpp"
 #include "Log.hpp"
 
+Loader::~Loader() {
+}
 ALLEGRO_BITMAP* Loader::GetBitmap(std::string name) {
 	if (bitmaps.count(name))
 		return bitmaps[name];
@@ -11,7 +13,6 @@ ALLEGRO_BITMAP* Loader::GetBitmap(std::string name) {
 	Log(Info) << "Loaded image: " << path;
 	return bitmaps[name];
 }
-
 ALLEGRO_BITMAP* Loader::GetBitmap(std::string name, int w, int h) {
 	std::string rename = name + std::to_string(w) + "x" + std::to_string(h);
 	if (bitmaps.count(rename))
@@ -32,7 +33,6 @@ ALLEGRO_BITMAP* Loader::GetBitmap(std::string name, int w, int h) {
 	bitmaps[rename] = resized_bmp;
 	return bitmaps[rename];
 }
-
 ALLEGRO_FONT* Loader::GetFont(std::string name, int size) {
 	if (fonts.count(name))
 		return fonts[name];
@@ -43,7 +43,8 @@ ALLEGRO_FONT* Loader::GetFont(std::string name, int size) {
 	Log(Info) << "Loaded font: " << path;
 	return fonts[name];
 }
-
-Loader::~Loader() {
+Loader& Loader::GetInstance() {
+	static Loader loader;
+	return loader;
 }
 

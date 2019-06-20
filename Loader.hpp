@@ -21,6 +21,7 @@ public:
 	ALLEGRO_BITMAP* GetBitmap(std::string name);
 	ALLEGRO_BITMAP* GetBitmap(std::string name, int w, int h);
 	ALLEGRO_FONT* GetFont(std::string, int size);
+	Loader& GetInstance();
 };
 #endif
 
