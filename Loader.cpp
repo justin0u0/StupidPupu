@@ -12,3 +12,13 @@ ALLEGRO_BITMAP* Loader::GetBitmap(std::string name) {
 	return bitmaps[name];
 }
 
+ALLEGRO_FONT* Loader::GetFont(std::string name, int size) {
+	if (fonts.count(name))
+		return fonts[name];
+	std::string path = font_prefix + name;
+	fonts[name] = al_load_font(path.c_str(), size, 0);
+	if (!fonts[name])
+		Log(Error) << "failed to load font: " << path;
+	Log(Info) << "Loaded font: " << path;
+	return fonts[name];
+}

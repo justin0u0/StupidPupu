@@ -1,5 +1,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
+//#incldue <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 #include <chrono>
 #include "GameEngine.hpp"
 #include "Log.hpp"
@@ -19,7 +21,11 @@ void GameEngine::InitAllegro5() {
 		Log(Error) << "failed to initialize primitives addon";
 	if (!al_init_image_addon())
 		Log(Error) << "failed to initialize image addon";
-
+	if (!al_init_font_addon())
+		Log(Error) << "failed to initialize font addon";
+	if (!al_init_ttf_addon())
+		Log(Error) << "failed to initialize ttf addon";
+	
 	if (!al_install_keyboard())
 		Log(Error) << "failed to install keyboard";
 	if (!al_install_mouse())
