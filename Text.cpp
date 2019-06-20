@@ -11,7 +11,9 @@ Text::Text(const std::string& text, const std::string& font, int fontSize, float
 	, text(text), color(al_map_rgba(r, g, b, a)) {
 }
 void Text::Draw() const {
-	al_draw_text(font, color, position.x - anchor.x * GetTextWidth(), position.y - anchor.y * GetTextHeight(), 0, text.c_str());
+	if (visible) {
+		al_draw_text(font, color, position.x - anchor.x * GetTextWidth(), position.y - anchor.y * GetTextHeight(), 0, text.c_str());
+	}
 }
 int Text::GetTextWidth() const {
 	return al_get_text_width(font, text.c_str());

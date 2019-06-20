@@ -26,10 +26,12 @@ Image::Image(std::string img, float x, float y, float w, float h, float anchorX,
 // dx, dt, dw, dh: destination position(x,y) + size(x,y)
 // change the image's position and size
 void Image::Draw() const {
-	al_draw_scaled_bitmap(bmp, 0, 0, GetBitmapWidth(), GetBitmapHeight()
-		, position.x - anchor.x * size.x
-		, position.y - anchor.y * size.y
-		, size.x, size.y, 0);
+	if (visible) {
+		al_draw_scaled_bitmap(bmp, 0, 0, GetBitmapWidth(), GetBitmapHeight()
+			, position.x - anchor.x * size.x
+			, position.y - anchor.y * size.y
+			, size.x, size.y, 0);
+	}
 }
 int Image::GetBitmapWidth() const {
 	return al_get_bitmap_width(bmp);
