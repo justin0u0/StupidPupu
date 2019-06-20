@@ -1,6 +1,8 @@
 #ifndef IOBJECT_HPP
 #define IOBJECT_HPP
 
+#include "Point.hpp"
+
 class IObject {
 protected:
 	explicit IObject() = default;

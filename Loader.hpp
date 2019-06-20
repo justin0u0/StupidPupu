@@ -12,7 +12,7 @@
 class Loader final {
 private:
 	const std::string bitmap_prefix = "./assets/images/";
-	const std::string font_prefix = "./assets/fonts";
+	const std::string font_prefix = "./assets/fonts/";
 	std::unordered_map<std::string, ALLEGRO_BITMAP *> bitmaps;
 	std::unordered_map<std::string, ALLEGRO_FONT*> fonts;
 public:
