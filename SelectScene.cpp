@@ -3,13 +3,14 @@
 #include "Music.hpp"
 
 void SelectScene::Initialize() {
-	background = new Image("SelectSceneBackground.png", 0, 0, 0, 0, 0.5, 0.5);
+	Log(Debug) << "Select Scene Initialize";
+	background = new Image("SelectSceneBackground.png", 0, 0);
 	float dx = GameEngine::GetInstance().GetScreenWidth() / 3.0;
 	for (int i = 0; i < 3; i++) {
 		saves[i] = new ImageButton("square_button.png", "square_button.png", dx * (i + 0.5), 400, 0.5, 0);
 		saves[i]->SetOnClick(std::bind(&SelectScene::Start, this));
 	}
-	Music::PlayBGM("LA.wav");
+//	Music::PlayBGM("LA.wav");
 }
 void SelectScene::Terminate() {
 }
@@ -30,21 +31,4 @@ void SelectScene::Draw() const {
 void SelectScene::Start() {
 	// TODO: change scene
 }
-/*
-#ifndef SELECT_SCENE_HPP
-#define SELECT_SCENE_HPP
-
-class SelectScene final : public IScene {
-private:
-	Image* background;
-	ImageButton* saves[3];
-	Text* start;
-public:
-	void Initialize() override;
-	void OnMouseDown() override;
-	void OnMouseMove() override;
-	void Terminate() override;
-};
-#endif
-*/
 

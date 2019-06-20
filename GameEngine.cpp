@@ -9,13 +9,13 @@
 #include "IScene.hpp"
 #include "Image.hpp"
 
+/* testing
 float x, y;
 bool key_state[ALLEGRO_KEY_MAX];
 Image* rabbit;
+*/
 
 void GameEngine::InitAllegro5() {
-	x = 50.0;
-	y = 50.0;
 	// Initialize allegro
 	if (!al_init())
 		Log(Error) << "failed to initialize allegro";
@@ -34,7 +34,11 @@ void GameEngine::InitAllegro5() {
 	if (!al_install_mouse())
 		Log(Error) << "failed to install mouse";
 
+	/* testing
+	x = 50.0;
+	y = 50.0;
 	rabbit = new Image("rabbit.png", x, y);
+	*/
 	
 	// set game display
 	display = al_create_display(screenW, screenH);
@@ -72,6 +76,7 @@ void GameEngine::StartEventLoop() {
 		al_wait_for_event(event_queue, &event);
 		switch(event.type) {
 			case ALLEGRO_EVENT_DISPLAY_CLOSE:
+				Log(Info) << "Windows close button clicked";
 				done = true;
 				break;
 			case ALLEGRO_EVENT_TIMER:
@@ -81,10 +86,42 @@ void GameEngine::StartEventLoop() {
 					redraws++;
 				break;
 			case ALLEGRO_EVENT_KEY_DOWN:
-				key_state[event.keyboard.keycode] = true;
+				Log(Verbose) << "Key with keycode " << event.keyboard.keycode << " down";
+				active_scene->OnKeyDown(event.keyboard.keycode);
+				// key_state[event.keyboard.keycode] = true;
 				break;
 			case ALLEGRO_EVENT_KEY_UP:
-				key_state[event.keyboard.keycode] = false;
+				Log(Verbose) << "Key with keycode " << event.keyboard.keycode << " up";
+				active_scene->OnKeyUp(event.keyboard.keycode);
+				// key_state[event.keyboard.keycode] = false;
+				break;
+			case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+				Log(Verbose) << "Mouse button " << event.mouse.button << " down at (" << event.mouse.x << "," << event.mouse.y << ")";
+				active_scene->OnMouseDown(event.mouse.button, event.mouse.x, event.mouse.y);
+				break;
+			case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
+				Log(Verbose) << "Mouse button " << event.mouse.button << " up at (" << event.mouse.x << "," << event.mouse.y << ")";
+				active_scene->OnMouseUp(event.mouse.button, event.mouse.x, event.mouse.y);
+				break;
+			case ALLEGRO_EVENT_MOUSE_AXES:
+				if (event.mouse.dx != 0 || event.mouse.dy != 0) {
+					Log(Verbose) << "Mouse move to (" << event.mouse.x << "," << event.mouse.y << ")";
+					active_scene->OnMouseMove(event.mouse.x, event.mouse.y);
+				} else if (event.mouse.dz != 0) {
+					Log(Verbose) << "Mouse scroll at (" << event.mouse.x << "," << event.mouse.y << ") with delta " << event.mouse.dz;
+					active_scene->OnMouseScroll(event.mouse.x, event.mouse.y, event.mouse.dz);
+				}
+				break;
+			case ALLEGRO_EVENT_MOUSE_LEAVE_DISPLAY:
+				Log(Verbose) << "Mouse leave display.";
+				ALLEGRO_MOUSE_STATE state;
+				al_get_mouse_state(&state);
+				active_scene->OnMouseMove(-1, -1);
+				break;
+			case ALLEGRO_EVENT_MOUSE_ENTER_DISPLAY:
+				Log(Verbose) << "Mouse enter display.";
+				break;
+			default:
 				break;
 		}
 		// Redraw the scene.
@@ -103,12 +140,18 @@ void GameEngine::StartEventLoop() {
 	}
 }
 void GameEngine::Draw() {
+	/* testing
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 	rabbit->Draw();
-//	al_draw_filled_rectangle(x, y, x + 800, y + 800, al_map_rgb(255, 150, 170));
+	al_draw_filled_rectangle(x, y, x + 800, y + 800, al_map_rgb(255, 150, 170));
+	al_flip_display();
+	*/
+	active_scene->Draw();
 	al_flip_display();
 }
 void GameEngine::Update(float deltaTime) {
+	active_scene->Update(deltaTime);
+	/* testing
 	if (key_state[ALLEGRO_KEY_UP])
 		rabbit->position.y -= 30 * deltaTime;
 	if (key_state[ALLEGRO_KEY_DOWN])
@@ -117,6 +160,7 @@ void GameEngine::Update(float deltaTime) {
 		rabbit->position.x += 30 * deltaTime;
 	if (key_state[ALLEGRO_KEY_LEFT])
 		rabbit->position.x -= 30 * deltaTime;
+	*/
 }
 void GameEngine::Destroy() {
 	al_destroy_timer(update_timer);
@@ -124,7 +168,7 @@ void GameEngine::Destroy() {
 	al_destroy_display(display);
 }
 void GameEngine::Start(int fps, int screenW, int screenH, const char *title, const char *first_scene) {
-	Log(Info) << "Game Initializeing ...";
+	Log(Info) << "Initializeing ...";
 	this->fps = fps;
 	this->screenW = screenW;
 	this->screenH = screenH;
@@ -132,10 +176,19 @@ void GameEngine::Start(int fps, int screenW, int screenH, const char *title, con
 	if (!scenes.count(first_scene))
 		Log(Error) << "Scene: " << first_scene << " has not been added yet";
 	active_scene = scenes[first_scene];
+	Log(Info) << "Allegro Initializing ...";
 	InitAllegro5();
-	Log(Info) << "Game Initialized";
+	Log(Info) << "Allegro Initialized.";
+	Log(Info) << "Game Initializing ...";
+	active_scene->Initialize();
+	Log(Info) << "Game Initialized.";
+	Draw();
+	Log(Info) << "Start Event Loop.";
 	StartEventLoop();
+	Log(Info) << "Game Terminating ...";
+	active_scene->Terminate();
 	Destroy();
+	Log(Info) << "End";
 }
 void GameEngine::AddNewScene(const std::string name, IScene* scene) {
 	if (scenes.count(name))
