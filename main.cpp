@@ -1,11 +1,12 @@
 #include "GameEngine.hpp"
-#include <iostream>
 #include "Log.hpp"
+#include "SelectScene.hpp"
 
 int main() {
 	GameEngine &game = GameEngine::GetInstance();
 	game.AddNewScene("start", nullptr);
-	game.Start(60, 1536, 960, "StupidPupu", "start");
+	game.AddNewScene("select", new SelectScene());
+	game.Start(60, 1536, 960, "StupidPupu", "select");
 	return 0;
 }
 

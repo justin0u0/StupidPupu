@@ -17,8 +17,8 @@ public:
 	virtual ~IScene() = default;
 	virtual void Initialize() = 0;
 	virtual void Terminate() = 0;
-	void Draw() const;
-	virtual void Update(float deltaTime) = 0;
+	virtual void Draw() const;
+	virtual void Update(float deltaTime);
 };
 #endif
 

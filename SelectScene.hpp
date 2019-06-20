@@ -11,11 +11,12 @@ private:
 	ImageButton* saves[3];
 	Text* start;
 public:
+	explicit SelectScene() = default;
 	void Initialize() override;
 	void Terminate() override;
 	void OnMouseDown(int button, int mx, int my) override;
 	void OnMouseMove(int mx, int my) override;
-	void Draw() const;
+	void Draw() const override;
 	void Start();
 };
 #endif
