@@ -13,10 +13,10 @@ Image::Image(std::string img, float x, float y, float w, float h, float anchorX,
 		size.y = GetBitmapHeight();
 	} else if (size.x == 0) {
 		bmp = Loader::GetInstance().GetBitmap(img);
-		size.x = GetBitmapWidth();
+		size.x = GetBitmapWidth() * size.y / GetBitmapHeight();
 	} else if (size.y == 0) {
 		bmp = Loader::GetInstance().GetBitmap(img);
-		size.y = GetBitmapHeight();
+		size.y = GetBitmapHeight() * size.x / GetBitmapWidth();
 	} else {
 		bmp = Loader::GetInstance().GetBitmap(img, size.x, size.y);
 	}
@@ -24,11 +24,11 @@ Image::Image(std::string img, float x, float y, float w, float h, float anchorX,
 // al_draw_scaled_bitmap(bitmap pointer, sx, sy, sw, sh, dx, dy, dw, dh, flags)
 // sx, sy, sw, sh: source position(x,y) + size(w,h)
 // dx, dt, dw, dh: destination position(x,y) + size(x,y)
-// chamge the image's position and size
+// change the image's position and size
 void Image::Draw() const {
 	al_draw_scaled_bitmap(bmp, 0, 0, GetBitmapWidth(), GetBitmapHeight()
-		, position.x - anchor.x * GetBitmapWidth()
-		, position.y - anchor.y * GetBitmapHeight()
+		, position.x - anchor.x * size.x
+		, position.y - anchor.y * size.y
 		, size.x, size.y, 0);
 }
 int Image::GetBitmapWidth() const {
