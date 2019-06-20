@@ -1,5 +1,6 @@
 #include "GameEngine.hpp"
 #include "SelectScene.hpp"
+#include "Music.hpp"
 
 void SelectScene::Initialize() {
 	background = new Image("SelectSceneBackground.png", 0, 0, 0, 0, 0.5, 0.5);
@@ -8,6 +9,7 @@ void SelectScene::Initialize() {
 		saves[i] = new ImageButton("square_button.png", "square_button.png", dx * (i + 0.5), 400, 0.5, 0);
 		saves[i]->SetOnClick(std::bind(&SelectScene::Start, this));
 	}
+	Music::PlayBGM("LA.wav");
 }
 void SelectScene::Terminate() {
 }
