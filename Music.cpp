@@ -1,9 +1,4 @@
 #include <allegro5/allegro_audio.h>
-
-#include "Log.hpp"
-#include "Loader.hpp"
-#include <allegro5/allegro_audio.h>
-
 #include "Music.hpp"
 #include "Log.hpp"
 #include "Loader.hpp"
@@ -24,7 +19,7 @@ ALLEGRO_SAMPLE_ID Music::PlayBGM(const std::string& audio) {
 	ALLEGRO_SAMPLE_ID id;
 	if (!al_play_sample(music, bgm_volume, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, &id))
 		Log(Error) << "failed to play audio (bgm)";
-	Log(Verbose) << "played music (bgm)";
+	Log(Info) << "played music (bgm)";
 	return id;
 }
 void Music::StopBGM(ALLEGRO_SAMPLE_ID audio) {
