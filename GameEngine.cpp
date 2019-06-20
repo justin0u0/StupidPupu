@@ -201,6 +201,11 @@ int GameEngine::GetScreenWidth() const {
 int GameEngine::GetScreenHeight() const {
 	return screenH;
 }
+Point GameEngine::GetMousePosition() const {
+	ALLEGRO_MOUSE_STATE state;
+	al_get_mouse_state(&state);
+	return Point(state.x, state.y);
+}
 GameEngine& GameEngine::GetInstance() {
 	static GameEngine instance;
 	return instance;

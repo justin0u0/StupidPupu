@@ -4,10 +4,10 @@
 #include <allegro5/allegro.h>
 #include <cstring>
 #include <unordered_map>
-
 #include "IScene.hpp"
 #include "Image.hpp"
 #include "Loader.hpp"
+#include "Point.hpp"
  
 class GameEngine final {
 private:
@@ -46,6 +46,8 @@ public:
 	int GetScreenWidth() const;
 	// Screen height
 	int GetScreenHeight() const;
+	// Mouse position
+	Point GetMousePosition() const;
 	// function to retrieve instance and supports lazy initlalization
 	static GameEngine& GetInstance();
 };
