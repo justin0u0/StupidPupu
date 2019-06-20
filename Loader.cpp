@@ -43,12 +43,16 @@ ALLEGRO_FONT* Loader::GetFont(std::string name, int size) {
 	Log(Info) << "Loaded font: " << path;
 	return fonts[name];
 }
-//ALLEGRO_SAMPLE* Loader::GetMusic(std::string name) {
-//	if (music.count(name))
-//		return music[name];
-//	std::string path = music_prefix + name;
-//	music[name] = al_load_sample()
-//}
+ALLEGRO_SAMPLE* Loader::GetMusic(std::string name) {
+	if (music.count(name))
+		return music[name];
+	std::string path = music_prefix + name;
+	music[name] = al_load_sample(path.c_str());
+	if (!music[name])
+		Log(Error) << "failed to load audio: " << path;
+	Log(Info) << "Loaded audio: " << path;
+	return music[name];
+}
 Loader& Loader::GetInstance() {
 	static Loader loader;
 	return loader;
