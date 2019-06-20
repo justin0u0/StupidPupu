@@ -28,6 +28,7 @@ private:
 	// Initialize allegro 5, create window
 	void InitAllegro5();
 	void StartEventLoop();
+	void ChangeScene(const std::string& name);
 	void Draw();
 	void Update(float deltaTime);
 	void Destroy();
@@ -39,9 +40,11 @@ public:
 	// Copy assignment is deleted
 	GameEngine& operator=(GameEngine const&) = delete;
 	// Start game loop
-	void Start(int fps, int screenW, int screenH, const char *title, const char *first_scene);
+	void Start(int fps, int screenW, int screenH, const char* title, const std::string& first_scene);
 	// Add a new scene to game
-	void AddNewScene(const std::string name, IScene* scene);
+	void AddNewScene(const std::string& name, IScene* scene);
+	// Setter for next_scene
+	void SetNextScene(const std::string& name);
 	// Screen width
 	int GetScreenWidth() const;
 	// Screen height

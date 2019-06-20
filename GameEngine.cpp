@@ -139,6 +139,14 @@ void GameEngine::StartEventLoop() {
 		}
 	}
 }
+void GameEngine::ChangeScene(const std::string& name) {
+	if (!scenes.count(name))
+		Log(Error) << "Cannot change to unknown " << name << " scene";
+	active_scene->Terminate();
+	active_scene = scenes[name];
+	active_scene->Initialize();
+	Log(Info) << "Change to " << name << " scene";
+}
 void GameEngine::Draw() {
 	/* testing
 	al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -150,6 +158,10 @@ void GameEngine::Draw() {
 	al_flip_display();
 }
 void GameEngine::Update(float deltaTime) {
+	if (!next_scene.empty()) {
+		ChangeScene(next_scene);
+		next_scene = "";
+	}
 	active_scene->Update(deltaTime);
 	/* testing
 	if (key_state[ALLEGRO_KEY_UP])
@@ -167,7 +179,7 @@ void GameEngine::Destroy() {
 	al_destroy_event_queue(event_queue);
 	al_destroy_display(display);
 }
-void GameEngine::Start(int fps, int screenW, int screenH, const char *title, const char *first_scene) {
+void GameEngine::Start(int fps, int screenW, int screenH, const char *title, const std::string& first_scene) {
 	Log(Info) << "Initializeing ...";
 	this->fps = fps;
 	this->screenW = screenW;
@@ -190,10 +202,13 @@ void GameEngine::Start(int fps, int screenW, int screenH, const char *title, con
 	Destroy();
 	Log(Info) << "End";
 }
-void GameEngine::AddNewScene(const std::string name, IScene* scene) {
+void GameEngine::AddNewScene(const std::string& name, IScene* scene) {
 	if (scenes.count(name))
 		Log(Error) << "Cannot add scene with the same name";
 	scenes[name] = scene;
+}
+void GameEngine::SetNextScene(const std::string& name) {
+	next_scene = name;
 }
 int GameEngine::GetScreenWidth() const {
 	return screenW;
