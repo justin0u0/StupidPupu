@@ -3,16 +3,19 @@
 //#incldue <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <chrono>
+
 #include "GameEngine.hpp"
 #include "Log.hpp"
 #include "IScene.hpp"
+#include "Image.hpp"
 
 float x, y;
 bool key_state[ALLEGRO_KEY_MAX];
+Image* rabbit;
 
 void GameEngine::InitAllegro5() {
 	x = 50.0;
-	y = 50.0;;
+	y = 50.0;
 	// Initialize allegro
 	if (!al_init())
 		Log(Error) << "failed to initialize allegro";
@@ -31,6 +34,8 @@ void GameEngine::InitAllegro5() {
 	if (!al_install_mouse())
 		Log(Error) << "failed to install mouse";
 
+	rabbit = new Image("rabbit.png", x, y, 200, 200);
+	
 	// set game display
 	display = al_create_display(screenW, screenH);
 	if (!display) {
@@ -99,18 +104,19 @@ void GameEngine::StartEventLoop() {
 }
 void GameEngine::Draw() {
 	al_clear_to_color(al_map_rgb(0, 0, 0));
-	al_draw_filled_rectangle(x, y, x + 800, y + 800, al_map_rgb(255, 150, 170));
+	rabbit->Draw();
+//	al_draw_filled_rectangle(x, y, x + 800, y + 800, al_map_rgb(255, 150, 170));
 	al_flip_display();
 }
 void GameEngine::Update(float deltaTime) {
 	if (key_state[ALLEGRO_KEY_UP])
-		y -= 30 * deltaTime;
+		rabbit->position.y -= 30 * deltaTime;
 	if (key_state[ALLEGRO_KEY_DOWN])
-		y += 30 * deltaTime;
+		rabbit->position.y += 30 * deltaTime;
 	if (key_state[ALLEGRO_KEY_RIGHT])
-		x += 30 * deltaTime;
+		rabbit->position.x += 30 * deltaTime;
 	if (key_state[ALLEGRO_KEY_LEFT])
-		x -= 30 * deltaTime;
+		rabbit->position.x -= 30 * deltaTime;
 }
 void GameEngine::Destroy() {
 	al_destroy_timer(update_timer);
