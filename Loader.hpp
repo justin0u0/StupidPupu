@@ -16,6 +16,7 @@ public:
 	explicit Loader() = default;
 	~Loader();
 	ALLEGRO_BITMAP* GetBitmap(std::string name);
+	ALLEGRO_BITMAP* GetBitmap(std::string name, int w, int h);
 };
 #endif
 
