@@ -21,7 +21,6 @@ Image::Image(std::string img, float x, float y, float w, float h, float anchorX,
 		bmp = Loader::GetInstance().GetBitmap(img, size.x, size.y);
 	}
 }
-
 // al_draw_scaled_bitmap(bitmap pointer, sx, sy, sw, sh, dx, dy, dw, dh, flags)
 // sx, sy, sw, sh: source position(x,y) + size(w,h)
 // dx, dt, dw, dh: destination position(x,y) + size(x,y)

@@ -8,11 +8,10 @@
 #include <unordered_map>
 #include "Log.hpp"
 
-// Each IScene has an loader
 // Load Image, Sounds, Fonts
 class Loader final {
 private:
-	const std::string bitmap_prefix = "assets/images/";
+	const std::string bitmap_prefix = "./assets/images/";
 	const std::string font_prefix = "./assets/fonts/";
 	const std::string music_prefix = "./assets/audios/";
 	std::unordered_map<std::string, ALLEGRO_BITMAP *> bitmaps;
