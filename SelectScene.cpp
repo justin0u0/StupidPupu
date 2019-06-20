@@ -30,7 +30,6 @@ void SelectScene::Draw() const {
 		saves[i]->Draw();
 }
 void SelectScene::Start() {
-	Log(Debug) << "Click on square button";
-	// TODO: change scene
+	GameEngine::GetInstance().SetNextScene("play");
 }
 
