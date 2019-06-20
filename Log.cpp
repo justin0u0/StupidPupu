@@ -18,7 +18,8 @@ Log::Log(LogType type) {
 }
 
 Log::~Log() {
-	std::cout << std::endl;
+	if (type != Verbose || (type == Verbose && VerboseMode))
+		std::cout << std::endl;
 	if (type == Error)
 		throw std::runtime_error("Terminate on error");
 }
