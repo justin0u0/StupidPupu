@@ -4,7 +4,10 @@
 #include <allegro5/allegro.h>
 #include <cstring>
 #include <unordered_map>
+
 #include "IScene.hpp"
+#include "Image.hpp"
+#include "Loader.hpp"
  
 class GameEngine final {
 private:
@@ -22,7 +25,6 @@ private:
 	IScene *active_scene;
 	// next scene
 	std::string next_scene;
-
 	// Initialize allegro 5, create window
 	void InitAllegro5();
 	void StartEventLoop();
