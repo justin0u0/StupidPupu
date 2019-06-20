@@ -7,7 +7,7 @@ void SelectScene::Initialize() {
 	background = new Image("SelectSceneBackground.png", 0, 0);
 	float dx = GameEngine::GetInstance().GetScreenWidth() / 6.0;
 	for (int i = 0; i < 3; i++) {
-		saves[i] = new ImageButton("square_button.png", "square_button.png", dx * (i * 2 + 1), 400, 400, 400, 0.5, 0);
+		saves[i] = new ImageButton("square_button_light_gray.png", "square_button_gray.png", dx * (i * 2 + 1), 400, 400, 400, 0.5, 0);
 		saves[i]->SetOnClick(std::bind(&SelectScene::Start, this));
 		Log(Debug) << "Saves[" << i << "] is at (" << saves[i]->position.x << "," << saves[i]->position.y << ")";
 	}
