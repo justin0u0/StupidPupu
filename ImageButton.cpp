@@ -1,6 +1,7 @@
 #include "ImageButton.hpp"
 #include "Loader.hpp"
 #include "Point.hpp"
+#include "Collider.hpp"
 
 ImageButton::ImageButton(std::string imgOut, std::string imgIn, float x, float y, float w, float h, float anchorX, float anchorY)
 	: Image(imgOut, x, y, w, h, anchorX, anchorY)
