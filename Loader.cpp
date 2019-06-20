@@ -44,3 +44,6 @@ ALLEGRO_FONT* Loader::GetFont(std::string name, int size) {
 	return fonts[name];
 }
 
+Loader::~Loader() {
+}
+

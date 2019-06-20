@@ -17,7 +17,7 @@ private:
 	std::unordered_map<std::string, ALLEGRO_FONT*> fonts;
 public:
 	explicit Loader() = default;
-	~Loader();
+	~Loader(); // TODO: clear loader
 	ALLEGRO_BITMAP* GetBitmap(std::string name);
 	ALLEGRO_BITMAP* GetBitmap(std::string name, int w, int h);
 	ALLEGRO_FONT* GetFont(std::string, int size);
