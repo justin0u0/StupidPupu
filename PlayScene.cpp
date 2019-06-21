@@ -1,7 +1,6 @@
 #include "PlayScene.hpp"
 #include "GameEngine.hpp"
 
-#include "Sprite.hpp"
 void PlayScene::Initialize() {
 	int halfW = GameEngine::GetInstance().GetScreenWidth() / 2;
 	int halfH = GameEngine::GetInstance().GetScreenHeight() / 2;
@@ -11,12 +10,11 @@ void PlayScene::Terminate() {
 }
 void PlayScene::Draw() const {
 	IScene::Draw();
-//	lands[0]->Draw();
-	for (auto land : lands)
+	for (auto& land : lands)
 		land->Draw();
 }
 void PlayScene::Update(float deltaTime) {
-	for (auto land : lands)
+	for (auto& land : lands)
 		land->Update(deltaTime);
 }
 
