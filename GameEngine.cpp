@@ -227,6 +227,23 @@ Point GameEngine::GetMousePosition() const {
 	al_get_mouse_state(&state);
 	return Point(state.x, state.y);
 }
+bool GameEngine::IsKeyDown(int keycode) const {
+	ALLEGRO_KEYBOARD_STATE state;
+	al_get_keyboard_state(&state);
+	return al_key_down(&state, keycode);
+}
+bool GameEngine::IsLeft() const {
+	return (IsKeyDown(ALLEGRO_KEY_LEFT) || IsKeyDown(ALLEGRO_KEY_A));
+}
+bool GameEngine::IsRight() const {
+	return (IsKeyDown(ALLEGRO_KEY_RIGHT) || IsKeyDown(ALLEGRO_KEY_D));
+}
+bool GameEngine::IsUp() const {
+	return (IsKeyDown(ALLEGRO_KEY_UP) || IsKeyDown(ALLEGRO_KEY_W));
+}
+bool GameEngine::IsDown() const {
+	return (IsKeyDown(ALLEGRO_KEY_DOWN) || IsKeyDown(ALLEGRO_KEY_S));
+}
 GameEngine& GameEngine::GetInstance() {
 	static GameEngine instance;
 	return instance;

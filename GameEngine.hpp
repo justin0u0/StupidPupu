@@ -53,6 +53,16 @@ public:
 	int GetScreenHeight() const;
 	// Mouse position
 	Point GetMousePosition() const;
+	// Is key with keycode pressed
+	bool IsKeyDown(int keycode) const;
+	// Is pressing key left or 'a'
+	bool IsLeft() const;
+	// Is pressing key right or 'd'
+	bool IsRight() const;
+	// Is pressing key up or 'w'
+	bool IsUp() const;
+	// Is pressing key down or 's'
+	bool IsDown() const;
 	// function to retrieve instance and supports lazy initlalization
 	static GameEngine& GetInstance();
 };
