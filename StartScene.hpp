@@ -9,8 +9,8 @@
 class StartScene final : public IScene {
 private:
 	Image* background;
-	Text* start;
-	ImageButton* game_start;
+	Text* start_text;
+	ImageButton* start_button;
 	ALLEGRO_SAMPLE_ID bgm;
 public:
 	explicit StartScene() = default;

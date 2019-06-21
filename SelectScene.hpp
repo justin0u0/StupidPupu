@@ -9,7 +9,7 @@ class SelectScene final : public IScene {
 private:
 	Image* background;
 	ImageButton* saves[3];
-	Text* start;
+	Text* start[3];
 	ALLEGRO_SAMPLE_ID bgm;
 public:
 	explicit SelectScene() = default;

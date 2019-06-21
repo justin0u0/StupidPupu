@@ -1,6 +1,7 @@
 #include "GameEngine.hpp"
 #include "StartScene.hpp"
 #include "Music.hpp"
+#include "Loader.hpp"
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_audio.h>
@@ -10,24 +11,26 @@
 void StartScene::Initialize() {
 	Log(Debug) << "Start Scene Initialize";
 	background = new Image("StartSceneBackground.png", 0, 0);
-	game_start = new ImageButton("start_button_out.png", "start_button_in.png", 540, 700, 430, 130, 0, 0);
-	game_start->SetOnClick(std::bind(&StartScene::Start, this));
+	float halfW = GameEngine::GetInstance().GetScreenWidth() / 2;
+	start_button = new ImageButton("start_button_out.png", "start_button_in.png", halfW, 650, 430, 130, 0.5, 0);
+	start_button->SetOnClick(std::bind(&StartScene::Start, this));
+	start_text = new Text("START", "Metrool.ttf", 95, halfW, 670, 0, 0, 0, 255, 0.5, 0);
 	bgm = Music::PlayBGM("LA.wav"); 
 }
 void StartScene::Terminate() {
 	Music::StopBGM(bgm);
 }
 void StartScene::OnMouseDown(int button, int mx, int my) {
-	game_start->OnMouseDown(button, mx, my);
+	start_button->OnMouseDown(button, mx, my);
 }
 void StartScene::OnMouseMove(int mx, int my) {
-	game_start->OnMouseMove(mx, my);
+	start_button->OnMouseMove(mx, my);
 }
 void StartScene::Draw() const {
 	IScene::Draw();
 	background->Draw();
-	game_start->Draw();
-//	al_draw_filled_rectangle(540, 700, 970, 830, al_map_rgb(200, 100, 130));
+	start_button->Draw();
+	start_text->Draw();
 }
 void StartScene::Start() {
 	GameEngine::GetInstance().SetNextScene("select");
