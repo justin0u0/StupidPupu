@@ -26,7 +26,7 @@ void ImageButton::OnMouseMove(int mx, int my) {
 		, (my - position.y) * GetBitmapHeight() / size.y + anchor.y * GetBitmapHeight()), bmp);
 	bmp = (Enabled && mouseIn) ? image_in : image_out;
 }
-bool ImageButton::IsMouseIn() {
+bool ImageButton::IsMouseIn() const {
 	return mouseIn;
 }
 

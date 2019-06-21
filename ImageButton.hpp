@@ -27,6 +27,6 @@ public:
 	// middle button: button&4
 	void OnMouseDown(int button, int mx, int my) override;
 	void OnMouseMove(int mx, int my) override;
-	bool IsMouseIn();
+	bool IsMouseIn() const;
 };
 #endif
