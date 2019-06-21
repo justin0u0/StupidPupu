@@ -3,11 +3,13 @@
 
 #include <vector>
 #include "IScene.hpp"
-#include "Land.cpp"
+#include "Land.hpp"
+#include "Player.hpp"
 
 class PlayScene final : public IScene {
 private:
 	std::vector<Land *> lands;
+	Player* player;
 public:
 	void Initialize() override;
 	void Terminate() override;
