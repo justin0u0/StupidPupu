@@ -9,7 +9,7 @@ void SelectScene::Initialize() {
 	for (int i = 0; i < 3; i++) {
 		saves[i] = new ImageButton("square_button_light_gray.png", "square_button_gray.png", dx * (i * 2 + 1), 400, 400, 400, 0.5, 0);
 		saves[i]->SetOnClick(std::bind(&SelectScene::Start, this));
-		start[i] = new Text("START", "Metrool.ttf", 128, dx * (i * 2 + 1), 550, 100, 150, 200, 255, 0.5, 0);
+		start[i] = new Text("START", "Metrool.ttf", 128, dx * (i * 2 + 1), 550, 100, 200, 255, 255, 0.5, 0);
 	}
 	bgm = Music::PlayBGM("LA.wav");
 }
