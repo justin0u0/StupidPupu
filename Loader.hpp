@@ -24,6 +24,7 @@ public:
 	ALLEGRO_BITMAP* GetBitmap(std::string name, int w, int h);
 	ALLEGRO_FONT* GetFont(std::string, int size);
 	ALLEGRO_SAMPLE* GetMusic(std::string);
+	// TODO: FreeBitmap, FreeFont, FreeMusic
 	static Loader& GetInstance();
 };
 #endif
