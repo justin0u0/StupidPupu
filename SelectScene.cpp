@@ -9,11 +9,11 @@ void SelectScene::Initialize() {
 	for (int i = 0; i < 3; i++) {
 		saves[i] = new ImageButton("square_button_light_gray.png", "square_button_gray.png", dx * (i * 2 + 1), 400, 400, 400, 0.5, 0);
 		saves[i]->SetOnClick(std::bind(&SelectScene::Start, this));
-		Log(Debug) << "Saves[" << i << "] is at (" << saves[i]->position.x << "," << saves[i]->position.y << ")";
 	}
-//	Music::PlayBGM("LA.wav");
+	bgm = Music::PlayBGM("LA.wav");
 }
 void SelectScene::Terminate() {
+	Music::StopBGM(bgm);
 }
 void SelectScene::OnMouseDown(int button, int mx, int my) {
 	for (int i = 0; i < 3; i++)

@@ -10,6 +10,7 @@ private:
 	Image* background;
 	ImageButton* saves[3];
 	Text* start;
+	ALLEGRO_SAMPLE_ID bgm;
 public:
 	explicit SelectScene() = default;
 	void Initialize() override;
