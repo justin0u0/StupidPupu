@@ -11,6 +11,8 @@ public:
 	Point velocity;
 	// Color tint
 	ALLEGRO_COLOR tint;
+	// Assume a circle is a good approximation of the sprite's boundary
+	float hitbox_radius = 0;
 	// Flip flag: 0/ALLEGRO_FLIP_VERTICAL/ALLEGRO_FLIP_HORIZONTAL
 	int flag;
 	// Constructor
