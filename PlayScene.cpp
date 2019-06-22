@@ -21,6 +21,14 @@ void PlayScene::Update(float deltaTime) {
 		land->Update(deltaTime);
 	player->Update(deltaTime);
 }
-void OnMouseDown(int button, int mx, int my) {
+void PlayScene::AddNewResourceType(std::string name, std::string img, int maximum_hp, int universality) {
+	if (resources.count(name))
+		Log(Error) << "Cannot add same resource type with same name";
+	resources.insert(make_pair(name, ResourceInfo(name, img, maximum_hp, universality)));
+}
+ResourceInfo& PlayScene::GetResourceInfo(std::string name) {
+	if (!resources.count(name))
+		Log(Error) << "Resource type " << name << " has not been added.";
+	return resources.at(name);
 }
 
