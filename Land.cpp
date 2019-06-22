@@ -18,9 +18,15 @@ Point Land::NewSpawnPoint() {
 		for (int j = 0; j < Size; j++)
 			if (!land_state[i][j])
 				box.emplace_back(Point(i, j));
-	return box[Random::RandomInteger(0, (int)box.size())];
+	return box[Random::GetRandom().Integer(0, (int)box.size())];
+}
+void Land::Draw() const {
+	Sprite::Draw();
+	for (auto& resource : resources)
+		resource->Draw();
 }
 void Land::Update(float deltaTime) {
+	Spawn(deltaTime);
 	GameEngine& game = GameEngine::GetInstance();
 	// Since Player is pivot at (0, 0), so lands need to move opposite side
 	if (game.IsLeft())
@@ -45,19 +51,22 @@ void Land::AddNewResourceType(std::string name) {
 	resource_types.emplace_back(playscene->GetResourceInfo(name));
 }
 void Land::Spawn(float deltaTime) {
-	Log(Info) << "Land Spawning ...";
 	spawn_cooldown -= deltaTime;
 	// spawn resource
 	if (spawn_cooldown < 0.0) {
-		spawn_cooldown = Random::RandomFloat(15.0, 30.0);
-		int ammount = std::min((int)resources.size() - Capacity, Random::RandomInteger(3, 5));
-		std::vector<int> v = Random::RandomWeightedIntergerSequence(ammount, GetResourceWeights());
+		Log(Info) << "Land Spawning ...";
+		spawn_cooldown = Random::GetRandom().Float(15.0, 30.0);
+		int ammount = std::min(Capacity - (int)resources.size(), Random::GetRandom().Integer(3, 5));
+		std::vector<int> v = Random::GetRandom().WeightedIntergerSequence(ammount, GetResourceWeights());
 		for (int i = 0; i < ammount; i++) {
 			auto& type = resource_types[v[i]];
-			Log(Verbose) << "Land spawning a " << type.type;
-			Point p = NewSpawnPoint();
+			Log(Debug) << "Land spawning a " << type.type;
+			Point p = NewSpawnPoint() - Point(7.5, 7.5);
+			p = p * (size.x / Size) + position;
+			Log(Debug) <<"SpawnPoint: " << p.x << ' ' << p.y;
 			resources.emplace_back(new Resource(type.img, p.x, p.y, type.maximum_hp));
 		}
+		Log(Info) << "End Spawning";
 	}
 }
 

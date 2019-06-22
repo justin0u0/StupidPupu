@@ -12,7 +12,7 @@ private:
 	const int Size = 16;
 	const int Capacity = Size * Size / 2;
 	float spawn_cooldown = 0.0;
-	std::vector<std::vector<bool>> land_state;
+	std::vector<std::vector<bool>> land_state = std::vector<std::vector<bool>>(Size, std::vector<bool>(Size));
 	// TODO: belong's enemies
 	// TODO: unlock requirement;
 	// TODO: locked
@@ -22,6 +22,7 @@ private:
 	Point NewSpawnPoint();
 public:
 	explicit Land(std::string img, int x, int y);
+	void Draw() const override;
 	void Update(float deltaTime) override;
 	void AddNewResourceType(std::string name);
 	void Spawn(float deltaTime);
