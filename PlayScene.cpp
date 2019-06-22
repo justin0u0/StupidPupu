@@ -10,8 +10,12 @@
 void PlayScene::Initialize() {
 	int halfW = GameEngine::GetInstance().GetScreenWidth() / 2;
 	int halfH = GameEngine::GetInstance().GetScreenHeight() / 2;
-	lands.emplace_back(new Land("land_advanced.png", halfW, halfH));
 	player = new Player("ghost_transparent.png", halfW, halfH);
+	AddNewResourceType("Tree", "tree_transparent.png", 100, 10);
+	AddNewResourceType("Stone", "resource_stone.png", 300, 9);
+	lands.emplace_back(new Land("land_advanced.png", halfW, halfH));
+	lands.back()->AddNewResourceType("Tree");
+	lands.back()->AddNewResourceType("Stone");
 	// for adjust music LIVE
 	// bgm
 	//Creates a sample stream, using the supplied data. 
