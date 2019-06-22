@@ -15,12 +15,17 @@ private:
 	std::unordered_map<std::string, ResourceInfo> resources;
 	Player* player;
 	ALLEGRO_SAMPLE_INSTANCE *bgm_instance, *sfx_instance;
+	Setting *setting;
 public:
 	void Initialize() override;
 	void Terminate() override;
 	void Draw() const override;
 	void Update(float deltaTime) override;
 	void OnKeyDown(int keycode) override;
+	void BgmLouder();
+	void BgmLower();
+	void SfxLouder();
+	void SfxLower();
 	void AddNewResourceType(std::string name, std::string img, int hp, int universality);
 	ResourceInfo& GetResourceInfo(std::string name);
 };
