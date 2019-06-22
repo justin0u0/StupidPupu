@@ -19,6 +19,7 @@ public:
 	void Draw() const override;
 	int GetTextWidth() const;
 	int GetTextHeight() const;
+	void ChangeText(std::string new_text);
 };
 #endif
 

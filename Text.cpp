@@ -21,4 +21,6 @@ int Text::GetTextWidth() const {
 int Text::GetTextHeight() const {
 	return al_get_font_line_height(font);
 }
-
+void Text::ChangeText(std::string new_text) {
+	text = new_text;
+}
