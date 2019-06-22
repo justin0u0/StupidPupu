@@ -8,6 +8,13 @@ struct Point {
 	explicit Point(float x, float y);
 	bool operator==(const Point& rhs);
 	bool operator!=(const Point& rhs);
+	Point& operator+=(const Point& rhs);
+	Point& operator+(const Point& rhs);
+	Point& operator-=(const Point& rhs);
+	Point& operator-(const Point& rhs);
+	Point& operator*=(const int& rhs);
+	Point& operator*(const int& rhs);
+	Point& Round();
 };
 #endif
 
