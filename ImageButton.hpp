@@ -18,7 +18,7 @@ protected:
 	std::function<void(void)> onclick;
 public:
 	// Weather the imagebutton can be pressed
-	bool Enabled = true;
+	bool enabled = true;
 	explicit ImageButton(std::string imgOut, std::string imgIn, float x, float y, float w=0, float h=0, float anchorX=0, float anchorY=0);
 	// setter, since onclick is private
 	void SetOnClick(std::function<void(void)> onclick);
