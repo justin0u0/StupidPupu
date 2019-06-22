@@ -3,7 +3,7 @@
 #include "Resource.hpp"
 
 Resource::Resource(std::string img, float x, float y, int health)
-	: Sprite(img, x, y, 50, 50, 0.5, 0.5, 0, 0, 0, 255, 0, 0, 100, 0), health(health) {
+	: Sprite(img, x, y, 50, 50), health(health) {
 }
 void Resource::Update(float deltaTime) {
 	GameEngine& game = GameEngine::GetInstance();
