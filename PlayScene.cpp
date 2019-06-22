@@ -83,4 +83,14 @@ void PlayScene::SfxLower() {
 	al_set_sample_instance_gain(sfx_instance, setting->sfx_value);
 	Music::sfx_volume = setting->sfx_value;
 }
+void PlayScene::AddNewResourceType(std::string name, std::string img, int maximum_hp, int universality) {
+	if (resources.count(name))
+		Log(Error) << "Cannot add same resource type with same name";
+	resources.insert(make_pair(name, ResourceInfo(name, img, maximum_hp, universality)));
+}
+ResourceInfo& PlayScene::GetResourceInfo(std::string name) {
+	if (!resources.count(name))
+		Log(Error) << "Resource type " << name << " has not been added.";
+	return resources.at(name);
+}
 
