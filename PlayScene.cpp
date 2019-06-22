@@ -11,6 +11,7 @@ void PlayScene::Terminate() {
 }
 void PlayScene::Draw() const {
 	IScene::Draw();
+	al_clear_to_color(al_map_rgb(70, 150, 255));
 	for (auto& land : lands)
 		land->Draw();
 	player->Draw();
