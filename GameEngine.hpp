@@ -47,6 +47,8 @@ public:
 	void AddNewScene(const std::string& name, IScene* scene);
 	// Setter for next_scene
 	void SetNextScene(const std::string& name);
+	// Get the pointer of active scene
+	IScene* GetActiveScene() const;
 	// Screen width
 	int GetScreenWidth() const;
 	// Screen height
