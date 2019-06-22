@@ -58,8 +58,18 @@ void PlayScene::Update(float deltaTime) {
 void PlayScene::OnKeyDown(int keycode) {
 	IScene::OnKeyDown(keycode);
 	if (keycode == ALLEGRO_KEY_ESCAPE) {
+		if (setting->Status())
+			Log(Info) << "Close Setting";
+		else 
+			Log(Info) << "Open Setting";
 		setting->ReverseStatus();
 	}
+}
+void PlayScene::OnMouseDown(int button, int mx, int my) {
+	setting->OnMouseDown(button, mx, my);
+}
+void PlayScene::OnMouseMove(int mx, int my) {
+	setting->OnMouseMove(mx, my);
 }
 void PlayScene::BgmLouder() {
 	float volume = setting->bgm_value + 0.1;

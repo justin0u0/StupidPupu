@@ -22,6 +22,8 @@ public:
 	void Draw() const override;
 	void Update(float deltaTime) override;
 	void OnKeyDown(int keycode) override;
+	void OnMouseDown(int button, int mx, int my) override;
+	void OnMouseMove(int mx, int my) override;
 	void BgmLouder();
 	void BgmLower();
 	void SfxLouder();
