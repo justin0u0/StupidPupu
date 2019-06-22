@@ -12,12 +12,17 @@ private:
 	std::vector<Land *> lands;
 	Player* player;
 	ALLEGRO_SAMPLE_INSTANCE *bgm_instance, *sfx_instance;
+	Setting *setting;
 public:
 	void Initialize() override;
 	void Terminate() override;
 	void Draw() const override;
 	void Update(float deltaTime) override;
 	void OnKeyDown(int keycode) override;
+	void BgmLouder();
+	void BgmLower();
+	void SfxLouder();
+	void SfxLower();
 };
 #endif
 
