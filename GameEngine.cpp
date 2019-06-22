@@ -152,9 +152,6 @@ void GameEngine::ChangeScene(const std::string& name) {
 	active_scene->Initialize();
 	Log(Info) << "Change to " << name << " scene";
 }
-IScene* GameEngine::GetActiveScene() const {
-	return active_scene;
-}
 void GameEngine::Draw() {
 	/* testing
 	al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -218,6 +215,9 @@ void GameEngine::AddNewScene(const std::string& name, IScene* scene) {
 }
 void GameEngine::SetNextScene(const std::string& name) {
 	next_scene = name;
+}
+IScene* GameEngine::GetActiveScene() const {
+	return active_scene;
 }
 int GameEngine::GetScreenWidth() const {
 	return screenW;
