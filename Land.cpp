@@ -50,6 +50,10 @@ void Land::AddNewResourceType(std::string name) {
 	PlayScene* playscene = dynamic_cast<PlayScene *>(GameEngine::GetInstance().GetActiveScene());
 	resource_types.emplace_back(playscene->GetResourceInfo(name));
 }
+void Land::AddNewEnemyType(std::string name) {
+	PlayScene *playscene = dynamic_cast<PlayScene *>(GameEngine::GetInstance().GetActiveScene());
+	enemy_types.emplace_back(playscene->GetEnemyInfo(name));
+}
 void Land::Spawn(float deltaTime) {
 	spawn_cooldown -= deltaTime;
 	// spawn resource

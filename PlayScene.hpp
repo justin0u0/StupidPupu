@@ -9,11 +9,13 @@
 #include "ResourceInfo.hpp"
 #include "Setting.hpp"
 #include "Bag.hpp"
+#include "EnemyInfo.hpp"
 
 class PlayScene final : public IScene {
 private:
 	std::vector<Land *> lands;
 	std::unordered_map<std::string, ResourceInfo> resources;
+	std::unordered_map<std::string, EnemyInfo> enemies;
 	Player* player;
 	ALLEGRO_SAMPLE_INSTANCE *bgm_instance, *sfx_instance;
 	Setting *setting;
@@ -32,6 +34,10 @@ public:
 	void SfxLower();
 	void AddNewResourceType(std::string name, std::string img, int hp, int universality);
 	ResourceInfo& GetResourceInfo(std::string name);
+	void AddNewEnemyType(std::string name, std::string img
+		, int hp, int dmg, float speed, float radius, float cooldown, int universality);
+	EnemyInfo& GetEnemyInfo(std::string name);
+	Player* GetPlayer() const;
 };
 #endif
 
