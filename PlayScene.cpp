@@ -51,7 +51,6 @@ void PlayScene::Initialize() {
 void PlayScene::Terminate() {
 }
 void PlayScene::Draw() const {
-	IScene::Draw();
 	al_clear_to_color(al_map_rgb(70, 150, 255));
 	for (auto& land : lands)
 		land->Draw();
@@ -60,7 +59,7 @@ void PlayScene::Draw() const {
 	setting->Draw();
 }
 void PlayScene::Update(float deltaTime) {
-	GameEngine& game = GameEngine::GetInstance();
+	pivot += player->GetVelocity() * deltaTime;
 	for (auto& land : lands)
 		land->Update(deltaTime);
 	player->Update(deltaTime);
@@ -133,5 +132,8 @@ EnemyInfo& PlayScene::GetEnemyInfo(std::string name) {
 	if (!enemies.count(name))
 		Log(Error) << "Enemy type " << name << " has not been added.";
 	return enemies.at(name);
+}
+void PlayScene::RepositionWithPivot(Point& p) {
+	p -= pivot;
 }
 

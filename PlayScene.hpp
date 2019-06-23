@@ -39,6 +39,7 @@ public:
 	void AddNewEnemyType(std::string name, std::string img, float w, float h
 		, int hp, int dmg, float speed, float radius, float cooldown, int universality);
 	EnemyInfo& GetEnemyInfo(std::string name);
+	void RepositionWithPivot(Point& p);
 };
 #endif
 
