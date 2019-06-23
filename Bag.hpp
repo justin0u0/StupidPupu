@@ -6,14 +6,16 @@
 
 class Bag : public Image , public IControl{
 private:
+	static const int Size = 20;
+	static const int MixSize = 4;
 //	Image *item[20];
-	ImageButton *square[20];
+	ImageButton *square[Size];
 //	Text *info[20];
 	// for mix function
 //	Image *mix_item[4];
-//	ImageButton *mix_square[4];
+	ImageButton *mix_square[4];
 //	Text *mix_info[4];
-//  ImageButton *mix;
+  	ImageButton *mix_button;
 public:
 	explicit Bag();
 	void Draw() const override;

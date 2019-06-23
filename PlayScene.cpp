@@ -80,9 +80,11 @@ void PlayScene::OnKeyDown(int keycode) {
 }
 void PlayScene::OnMouseDown(int button, int mx, int my) {
 	setting->OnMouseDown(button, mx, my);
+	bag->OnMouseDown(button, mx, my);
 }
 void PlayScene::OnMouseMove(int mx, int my) {
 	setting->OnMouseMove(mx, my);
+	bag->OnMouseMove(mx, my);
 }
 void PlayScene::BgmLouder() {
 	float volume = setting->bgm_value + 0.1;
