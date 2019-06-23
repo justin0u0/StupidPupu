@@ -19,7 +19,7 @@ void PlayScene::Initialize() {
 	AddNewResourceType("Tree", "tree_transparent.png", 100, 10);
 	AddNewResourceType("Stone", "resource_stone.png", 300, 9);
 	// Add enemies
-	AddNewEnemyType("Slime", "slime.png", 100, 1, 30, 50, 60, 10);
+	AddNewEnemyType("Slime", "slime.png", 50, 50, 100, 1, 30, 50, 60, 10);
 	// Add lands and corresponding resources
 	lands.emplace_back(new Land("land_advanced.png", halfW, halfH));
 	lands.back()->AddNewResourceType("Tree");
@@ -110,11 +110,11 @@ ResourceInfo& PlayScene::GetResourceInfo(std::string name) {
 		Log(Error) << "Resource type " << name << " has not been added.";
 	return resources.at(name);
 }
-void PlayScene::AddNewEnemyType(std::string name, std::string img
+void PlayScene::AddNewEnemyType(std::string name, std::string img, float w, float h
 	, int hp, int dmg, float speed, float radius, float cooldown, int universality) {
 	if (enemies.count(name))
 		Log(Error) << "Cannot add same enemy type with same name";
-	enemies.insert(make_pair(name, EnemyInfo(name, img, hp, dmg, speed, radius, cooldown, universality)));
+	enemies.insert(make_pair(name, EnemyInfo(name, img, w, h, hp, dmg, speed, radius, cooldown, universality)));
 }
 EnemyInfo& PlayScene::GetEnemyInfo(std::string name) {
 	if (!enemies.count(name))

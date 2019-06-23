@@ -32,7 +32,7 @@ public:
 	void SfxLower();
 	void AddNewResourceType(std::string name, std::string img, int hp, int universality);
 	ResourceInfo& GetResourceInfo(std::string name);
-	void AddNewEnemyType(std::string name, std::string img
+	void AddNewEnemyType(std::string name, std::string img, float w, float h
 		, int hp, int dmg, float speed, float radius, float cooldown, int universality);
 	EnemyInfo& GetEnemyInfo(std::string name);
 	Player* GetPlayer() const;
