@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "Sprite.hpp"
-//#include "PlayScene.hpp"
+#include "Point.hpp"
 #include "ResourceInfo.hpp"
 #include "Resource.hpp"
 #include "EnemyInfo.hpp"
@@ -14,6 +14,7 @@ private:
 	const int Size = 16;
 	const int Capacity = Size * Size / 2;
 	float spawn_cooldown = 0.0;
+	Point real_position;
 	// Resources
 	std::vector<std::vector<bool>> land_state = std::vector<std::vector<bool>>(Size, std::vector<bool>(Size));
 	std::vector<ResourceInfo> resource_types;

@@ -1,24 +1,13 @@
 #include "Resource.hpp"
 #include "GameEngine.hpp"
 #include "Resource.hpp"
+#include "PlayScene.hpp"
 
 Resource::Resource(std::string img, float x, float y, int health)
-	: Sprite(img, x, y, 50, 50), health(health) {
+	: Sprite(img, x, y, 50, 50), real_position(x, y), health(health) {
 }
 void Resource::Update(float deltaTime) {
-	GameEngine& game = GameEngine::GetInstance();
-	if (game.IsLeft())
-		velocity.x = 60;
-	else if (game.IsRight())
-		velocity.x = -60;
-	else
-		velocity.x = 0;
-	if (game.IsUp())
-		velocity.y = 60;
-	else if (game.IsDown())
-		velocity.y = -60;
-	else
-		velocity.y = 0;
+	position = dynamic_cast<PlayScene *>(GameEngine::GetInstance().GetActiveScene())->RepositionWithPivot(real_position); 
 	Sprite::Update(deltaTime);
 }
 
