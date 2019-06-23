@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "Sprite.hpp"
+//#include "PlayScene.hpp"
 #include "ResourceInfo.hpp"
 #include "Resource.hpp"
 #include "EnemyInfo.hpp"
@@ -17,11 +18,13 @@ private:
 	std::vector<std::vector<bool>> land_state = std::vector<std::vector<bool>>(Size, std::vector<bool>(Size));
 	std::vector<ResourceInfo> resource_types;
 	std::vector<Resource *> resources;
-	std::vector<int> GetResourceWeights();
-	Point NewSpawnPoint();
 	// Enemies
 	std::vector<EnemyInfo> enemy_types;
 	std::vector<Enemy *> enemies;
+	// Utilities
+	std::vector<int> GetResourceWeights();
+	std::vector<int> GetEnemyWeights();
+	Point NewSpawnPoint();
 	// TODO: unlock requirement;
 	// TODO: locked
 public:
@@ -31,6 +34,8 @@ public:
 	void AddNewResourceType(std::string name);
 	void AddNewEnemyType(std::string name);
 	void Spawn(float deltaTime);
+	void SpawnResource();
+	void SpawnEnemy();
 };
 #endif
 
