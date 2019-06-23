@@ -26,7 +26,7 @@ Point Land::NewSpawnPoint() {
 				box.emplace_back(Point(i, j));
 	Point p = box[Random::GetRandom().Integer(0, (int)box.size())];
 	p -= Point(7.5, 7.5);
-	p = p * (size.x / Size) + position;
+	p = p * (size.x / Size) + real_position;
 	return p; 
 }
 void Land::Draw() const {
@@ -76,6 +76,7 @@ void Land::SpawnResource() {
 		Point p = NewSpawnPoint();
 		Log(Verbose) << "SpawnPoint: " << p.x << ' ' << p.y;
 		resources.emplace_back(new Resource(type.img, p.x, p.y, type.maximum_hp));
+		land_state[p.x][p.y] = false;
 	}
 }
 void Land::SpawnEnemy() {
