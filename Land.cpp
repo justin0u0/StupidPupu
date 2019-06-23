@@ -76,7 +76,6 @@ void Land::SpawnResource() {
 		Point p = NewSpawnPoint();
 		Log(Verbose) << "SpawnPoint: " << p.x << ' ' << p.y;
 		resources.emplace_back(new Resource(type.img, p.x, p.y, type.maximum_hp));
-		land_state[p.x][p.y] = false;
 	}
 }
 void Land::SpawnEnemy() {
