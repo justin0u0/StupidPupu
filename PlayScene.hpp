@@ -10,12 +10,14 @@
 #include "Setting.hpp"
 #include "Bag.hpp"
 #include "EnemyInfo.hpp"
+#include "Item.hpp"
 
 class PlayScene final : public IScene {
 private:
 	std::vector<Land *> lands;
 	std::unordered_map<std::string, ResourceInfo> resources;
 	std::unordered_map<std::string, EnemyInfo> enemies;
+	std::unordered_map<std::string, Item *> items; // item name, img name
 	Player* player;
 	ALLEGRO_SAMPLE_INSTANCE *bgm_instance, *sfx_instance;
 	Setting *setting;
@@ -28,16 +30,20 @@ public:
 	void OnKeyDown(int keycode) override;
 	void OnMouseDown(int button, int mx, int my) override;
 	void OnMouseMove(int mx, int my) override;
+	// setting buttons's callback function
 	void BgmLouder();
 	void BgmLower();
 	void SfxLouder();
 	void SfxLower();
+	// For Resource
 	void AddNewResourceType(std::string name, std::string img, int hp, int universality);
 	ResourceInfo& GetResourceInfo(std::string name);
 	void AddNewEnemyType(std::string name, std::string img, float w, float h
 		, int hp, int dmg, float speed, float radius, float cooldown, int universality);
 	EnemyInfo& GetEnemyInfo(std::string name);
+	void AddNewItemType(std::string name, std::string img);
 	Player* GetPlayer() const;
+	void AddToPackage(std::string item, int amount);
 };
 #endif
 
