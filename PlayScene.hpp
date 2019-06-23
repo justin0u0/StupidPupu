@@ -45,7 +45,7 @@ public:
 	EnemyInfo& GetEnemyInfo(std::string name);
 	void AddNewItemType(std::string name, std::string img);
 	void AddToPackage(std::string item, int amount);
-	Point& RepositionWithPivot(Point p);
+	Point RepositionWithPivot(Point p);
 };
 #endif
 

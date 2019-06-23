@@ -2,8 +2,11 @@
 #define ENEMY_HPP
 
 #include "Sprite.hpp"
+#include "Point.hpp"
 
 class Enemy : public Sprite {
+private:
+	Point real_position;
 	float speed;
 	float detect_radius;
 	float attack_cooldown;

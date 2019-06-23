@@ -2,11 +2,12 @@
 #include "Enemy.hpp"
 #include "Random.hpp"
 #include "GameEngine.hpp"
+#include "PlayScene.hpp"
 
 Enemy::Enemy(std::string img, float x, float y, float w, float h
 	, int health, int damage, float speed, float detect_radius, float attack_cooldown)
-	: Sprite(img, x, y, w, h), health(health), damage(damage), speed(speed)
-	, detect_radius(detect_radius), attack_cooldown(attack_cooldown) {
+	: Sprite(img, x, y, w, h), real_position(Point(x, y)), health(health), damage(damage)
+	, speed(speed), detect_radius(detect_radius), attack_cooldown(attack_cooldown) {
 }
 void Enemy::Update(float deltaTime) {
 	change_direction_cooldown -= deltaTime;
@@ -18,17 +19,11 @@ void Enemy::Update(float deltaTime) {
 			velocity.y *= -1;
 		velocity *= speed;
 	}
-//		velocity.x = -60;
-//	else if (game.IsRight())
-//		velocity.x += 60;
-//	if (game.IsUp())
-//		velocity.y -= 60;
-//	else if (game.IsDown())
-//		velocity.y += 60;
 	if (velocity.x > 0)
 		flag = ALLEGRO_FLIP_HORIZONTAL;
 	else
 		flag = 0;
-	Sprite::Update(deltaTime);
+	real_position += velocity * deltaTime;
+	position = dynamic_cast<PlayScene *>(GameEngine::GetInstance().GetActiveScene())->RepositionWithPivot(real_position);
 }
 
