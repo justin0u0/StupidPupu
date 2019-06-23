@@ -164,7 +164,7 @@ void AddToPackage(std::string item, int amount) {
 //	else
 //		package.insert(make_pair(item, amount));
 }
-void PlayScene::RepositionWithPivot(Point& p) {
-	p -= pivot;
+Point& PlayScene::RepositionWithPivot(Point p) {
+	return p - pivot;
 }
 

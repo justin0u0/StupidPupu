@@ -16,8 +16,7 @@ void Player::Update(float deltaTime) {
 		flag = 0;
 	velocity = GetVelocity();
 	real_position += velocity * deltaTime;
-	position = real_position;
-	dynamic_cast<PlayScene *>(game.GetActiveScene())->RepositionWithPivot(position);
+	position = dynamic_cast<PlayScene *>(game.GetActiveScene())->RepositionWithPivot(real_position);
 }
 Point Player::GetVelocity() const {
 	GameEngine& game = GameEngine::GetInstance();
