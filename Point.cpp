@@ -16,36 +16,31 @@ Point& Point::operator+=(const Point& rhs) {
 	y += rhs.y;
 	return *this;
 }
-Point& Point::operator+(const Point& rhs) {
-	return (*this) += rhs;
-}
 Point& Point::operator-=(const Point& rhs) {
 	x -= rhs.x;
 	y -= rhs.y;
 	return *this;
-}
-Point& Point::operator-(const Point& rhs) {
-	return (*this) -= rhs;
 }
 Point& Point::operator*=(const int& rhs) {
 	x *= rhs;
 	y *= rhs;
 	return *this;
 }
-Point& Point::operator*(const int& rhs) {
-	return (*this) *= rhs;
-}
 Point& Point::operator*=(const float& rhs) {
 	x *= rhs;
 	y *= rhs;
 	return *this;
 }
-Point& Point::operator*(const float& rhs) {
-	return (*this) *= rhs;
+Point const operator+(Point const& lhs, Point const& rhs) {
+	return Point(lhs) += rhs;
 }
-Point& Point::Round() {
-	x = std::round(x);
-	y = std::round(y);
-	return *this;
+Point const operator-(Point const& lhs, Point const& rhs) {
+	return Point(lhs) -= rhs;
+}
+Point const operator*(Point const& lhs, int const& rhs) {
+	return Point(lhs) *= rhs;
+}
+Point const operator*(Point const& lhs, float const& rhs) {
+	return Point(lhs) *= rhs;
 }
 

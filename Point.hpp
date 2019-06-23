@@ -11,14 +11,13 @@ struct Point {
 	bool operator==(const Point& rhs);
 	bool operator!=(const Point& rhs);
 	Point& operator+=(const Point& rhs);
-	Point& operator+(const Point& rhs);
 	Point& operator-=(const Point& rhs);
-	Point& operator-(const Point& rhs);
 	Point& operator*=(const int& rhs);
-	Point& operator*(const int& rhs);
 	Point& operator*=(const float& rhs);
-	Point& operator*(const float& rhs);
-	Point& Round();
 };
+Point const operator+(Point const& lhs, Point const& rhs);
+Point const operator-(Point const& lhs, Point const& rhs);
+Point const operator*(Point const& lhs, int const& rhs);
+Point const operator*(Point const& lhs, float const& rhs);
 #endif
 
