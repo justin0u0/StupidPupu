@@ -56,6 +56,5 @@ bool Setting::Status() const {
 }
 void Setting::SetValue(std::function<void(void)> onclick_function, int id) {
 	buttons[id]->SetOnClick(onclick_function);
-	Log(Debug) << "button" << id << " complete SetOnClick";
 }
 
