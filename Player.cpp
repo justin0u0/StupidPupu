@@ -8,6 +8,19 @@ Player::Player(std::string img, float x, float y)
 	: Sprite(img, x, y, 50, 50), real_position(Point(x, y)) {
 }
 void Player::OnMouseDown(int button, int mx, int my) {
+	PlayScene* playscene = dynamic_cast<PlayScene *>(GameEngine::GetInstance().GetActiveScene());
+	Land* land = playscene->GetPlayerLand();
+	for (auto resource : land->resources) {
+		if ((button & 1) && Distance(position, Point(mx, my)) && Collider::PointInCircle(Point(mx, my), resource->position, resource->hitbox_radius)) {
+			Log(Debug) << "Player click resource at: (" << mx << ',' << my << ')';
+		}
+	}
+}
+void Player::OnMouseMove(int mx, int my) {
+}
+void Player::Draw() const {
+	Sprite::Draw();
+	tool->Draw();
 }
 void Player::Update(float deltaTime) {
 	GameEngine& game = GameEngine::GetInstance();
@@ -16,24 +29,23 @@ void Player::Update(float deltaTime) {
 	else if (game.IsRight())
 		flag = 0;
 	velocity = GetVelocity();
-	PlayScene *playscene = dynamic_cast<PlayScene *>(game.GetActiveScene());
-	std::vector<Land *>& lands = playscene->lands;
+	PlayScene* playscene = dynamic_cast<PlayScene *>(game.GetActiveScene());
+	Land* land = playscene->GetPlayerLand();
 	Point next_position = real_position + velocity * deltaTime;
-	for (auto& land : lands) {
-		for (auto& resource : land->resources) {
-			if (Collider::CircleIntersect(Point(next_position.x, real_position.y), hitbox_radius, resource->real_position, resource->hitbox_radius))
-				next_position.x = real_position.x;
-			if (Collider::CircleIntersect(Point(real_position.x, next_position.y), hitbox_radius, resource->real_position, resource->hitbox_radius))
-				next_position.y = real_position.y;
-		}
-		if (Collider::PointInRectangle(next_position, land->LeftUpCorner(), land->RightDownCorner())) {
-			next_position.x = std::max(next_position.x, land->LeftUpCorner().x + size.x / 2);
-			next_position.x = std::min(next_position.x, land->RightDownCorner().x - size.x / 2);
-			next_position.y = std::max(next_position.y, land->LeftUpCorner().y + size.y / 2);
-			next_position.y = std::min(next_position.y, land->RightDownCorner().y - size.y / 2);
-		}
+	for (auto& resource : land->resources) {
+		if (Collider::CircleIntersect(Point(next_position.x, real_position.y), hitbox_radius, resource->real_position, resource->hitbox_radius))
+			next_position.x = real_position.x;
+		if (Collider::CircleIntersect(Point(real_position.x, next_position.y), hitbox_radius, resource->real_position, resource->hitbox_radius))
+			next_position.y = real_position.y;
+	}
+	if (Collider::PointInRectangle(next_position, land->LeftUpCorner(), land->RightDownCorner())) {
+		next_position.x = std::max(next_position.x, land->LeftUpCorner().x + size.x / 2);
+		next_position.x = std::min(next_position.x, land->RightDownCorner().x - size.x / 2);
+		next_position.y = std::max(next_position.y, land->LeftUpCorner().y + size.y / 2);
+		next_position.y = std::min(next_position.y, land->RightDownCorner().y - size.y / 2);
 	}
 	playscene->pivot += (next_position - real_position);
+	tool->Update(deltaTime);
 	real_position = next_position;
 	position = playscene->RepositionWithPivot(real_position);
 }
@@ -53,5 +65,8 @@ Point Player::GetVelocity() const {
 		v.y /= sqrt(2.0);
 	}
 	return v;
+}
+void Player::ChangeTool(Tool* tool) {
+	this->tool = tool;
 }
 

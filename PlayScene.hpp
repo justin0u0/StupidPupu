@@ -18,13 +18,13 @@ private:
 	std::unordered_map<std::string, ResourceInfo> resources;
 	std::unordered_map<std::string, EnemyInfo> enemies;
 	std::unordered_map<std::string, Item *> items; // item name, img name
-	Player* player;
 	ALLEGRO_SAMPLE_INSTANCE *bgm_instance, *sfx_instance;
 	Setting *setting;
 	Bag *bag;
 public:
 	Point pivot;
 	std::vector<Land *> lands;
+	Player* player;
 	void Initialize() override;
 	void Terminate() override;
 	void Draw() const override;
@@ -45,6 +45,7 @@ public:
 	EnemyInfo& GetEnemyInfo(std::string name);
 	void AddNewItemType(std::string name, std::string img);
 	void AddToPackage(std::string name, int amount);
+	Land* GetPlayerLand() const;
 	Point RepositionWithPivot(Point p);
 };
 #endif

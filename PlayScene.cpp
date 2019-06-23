@@ -9,6 +9,7 @@
 #include "PlayScene.hpp"
 #include "GameEngine.hpp"
 #include "Music.hpp"
+#include "Collider.hpp"
 
 void PlayScene::Initialize() {
 	int halfW = GameEngine::GetInstance().GetScreenWidth() / 2;
@@ -27,7 +28,7 @@ void PlayScene::Initialize() {
 	lands.back()->AddNewResourceType("Tree");
 	lands.back()->AddNewResourceType("Stone");
 	lands.back()->AddNewEnemyType("Slime");
-	// Add Items
+	// Add Tools
 	AddNewItemType("Wood Pickaxe", "wood_pickaxe.png");
 	AddNewItemType("Stone Pickaxe", "stone_pickaxe.png");
 	AddNewItemType("Iron Pickaxe", "iron_pickaxe.png");
@@ -35,10 +36,12 @@ void PlayScene::Initialize() {
 	AddNewItemType("Wood Sword", "wood_sword.png");
 	AddNewItemType("Stone Sword", "stone_sword.png");
 	AddNewItemType("Iron Sword", "iron_sword.png");
+	// Add Foods
 	AddNewItemType("Blueberry", "blueberry.png");
 	AddNewItemType("Redberry", "redberry.png");
 	AddNewItemType("Heal Potion (once)", "red_potion.png");
 	AddNewItemType("Heal Potion (continuous)", "blue_potion");
+	// Add Materials
 	AddNewItemType("Wood", "wood.png");
 	AddNewItemType("Stone", "stone.png");
 	AddNewItemType("Coal", "coal.png");
@@ -64,10 +67,15 @@ void PlayScene::Initialize() {
 	setting->SetValue(std::bind(&PlayScene::BgmLower, this), 1);
 	setting->SetValue(std::bind(&PlayScene::SfxLouder, this), 2);
 	setting->SetValue(std::bind(&PlayScene::SfxLower, this), 3);
+	
+	// Testings 1
 	Log(Debug) << "Add 2 stone to package";
 	AddToPackage("Stone", 2);
 	Log(Debug) << "Add 3 wood to package";
 	AddToPackage("Wood", 3);
+	
+	// Testings 2
+	player->ChangeTool(new Tool("Wood Pickaxe", "wood_pickaxe.png", 50, 50, 100, 9, 5, 3));
 }
 void PlayScene::Terminate() {
 }
@@ -172,6 +180,15 @@ void PlayScene::AddToPackage(std::string name, int amount) {
 	if (!items.count(name))
 		Log(Error) << "Item type " << name << " has not been added.";
 	bag->AddItem(items[name], amount);
+}
+Land* PlayScene::GetPlayerLand() const {
+	for (auto& land : lands) {
+		if (Collider::PointInRectangle(player->position, land->LeftUpCorner(), land->RightDownCorner())) {
+			return land;
+		}
+	}
+	Log(Error) << "Player is not on any land";
+	return nullptr;
 }
 Point PlayScene::RepositionWithPivot(Point p) {
 	return p - pivot;
