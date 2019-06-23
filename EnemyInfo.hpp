@@ -1,5 +1,5 @@
 #ifndef ENEMYINFO_HPP
-#define ENEMYINTO_HPP
+#define ENEMYINFO_HPP
 
 #include <string>
 
