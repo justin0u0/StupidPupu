@@ -13,14 +13,19 @@
 void PlayScene::Initialize() {
 	int halfW = GameEngine::GetInstance().GetScreenWidth() / 2;
 	int halfH = GameEngine::GetInstance().GetScreenHeight() / 2;
+	// Create Player
 	player = new Player("ghost_transparent.png", halfW, halfH);
 	// Add resources
 	AddNewResourceType("Tree", "tree_transparent.png", 100, 10);
 	AddNewResourceType("Stone", "resource_stone.png", 300, 9);
+	// Add enemies
+	AddNewEnemyType("Slime", "slime.png", 100, 1, 30, 50, 60, 10);
 	// Add lands and corresponding resources
 	lands.emplace_back(new Land("land_advanced.png", halfW, halfH));
 	lands.back()->AddNewResourceType("Tree");
 	lands.back()->AddNewResourceType("Stone");
+	lands.back()->AddNewEnemyType("Slime");
+	// Create Setting
 	setting = new Setting();
 	// Create bgm
 	bgm_instance = al_create_sample_instance(Loader::GetInstance().GetMusic("play.ogg"));
@@ -85,14 +90,28 @@ void PlayScene::SfxLower() {
 	al_set_sample_instance_gain(sfx_instance, setting->sfx_value);
 	Music::sfx_volume = setting->sfx_value;
 }
-void PlayScene::AddNewResourceType(std::string name, std::string img, int maximum_hp, int universality) {
+void PlayScene::AddNewResourceType(std::string name, std::string img, int hp, int universality) {
 	if (resources.count(name))
 		Log(Error) << "Cannot add same resource type with same name";
-	resources.insert(make_pair(name, ResourceInfo(name, img, maximum_hp, universality)));
+	resources.insert(make_pair(name, ResourceInfo(name, img, hp, universality)));
 }
 ResourceInfo& PlayScene::GetResourceInfo(std::string name) {
 	if (!resources.count(name))
 		Log(Error) << "Resource type " << name << " has not been added.";
 	return resources.at(name);
+}
+void PlayScene::AddNewEnemyType(std::string name, std::string img
+	, int hp, int dmg, float speed, float radius, float cooldown, int universality) {
+	if (enemies.count(name))
+		Log(Error) << "Cannot add same enemy type with same name";
+	enemies.insert(make_pair(name, EnemyInfo(name, img, hp, dmg, speed, radius, cooldown, universality)));
+}
+EnemyInfo& PlayScene::GetEnemyInfo(std::string name) {
+	if (!enemies.count(name))
+		Log(Error) << "Enemy type " << name << " has not been added.";
+	return enemies.at(name);
+}
+Player* PlayScene::GetPlayer() const {
+	return player;
 }
 
