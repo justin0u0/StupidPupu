@@ -28,12 +28,6 @@ void PlayScene::Initialize() {
 	lands.back()->AddNewResourceType("Stone");
 	lands.back()->AddNewEnemyType("Slime");
 	// Add Items
-	AddNewItemType("Wood", "wood.png");
-	AddNewItemType("Stone", "stone.png");
-	AddNewItemType("Coal", "coal.png");
-	AddNewItemType("Iron", "iron.png");
-	AddNewItemType("Blueberry", "blueberry.png");
-	AddNewItemType("Redberry", "redberry.png");
 	AddNewItemType("Wood Pickaxe", "wood_pickaxe.png");
 	AddNewItemType("Stone Pickaxe", "stone_pickaxe.png");
 	AddNewItemType("Iron Pickaxe", "iron_pickaxe.png");
@@ -41,12 +35,19 @@ void PlayScene::Initialize() {
 	AddNewItemType("Wood Sword", "wood_sword.png");
 	AddNewItemType("Stone Sword", "stone_sword.png");
 	AddNewItemType("Iron Sword", "iron_sword.png");
+	AddNewItemType("Blueberry", "blueberry.png");
+	AddNewItemType("Redberry", "redberry.png");
 	AddNewItemType("Heal Potion (once)", "red_potion.png");
 	AddNewItemType("Heal Potion (continuous)", "blue_potion");
+	AddNewItemType("Wood", "wood.png");
+	AddNewItemType("Stone", "stone.png");
+	AddNewItemType("Coal", "coal.png");
+	AddNewItemType("Iron", "iron.png");
 	// Create Setting
 	setting = new Setting();
 	bag = new Bag();
 	// Create bgm
+	Log(Debug) << "Hi";
 	bgm_instance = al_create_sample_instance(Loader::GetInstance().GetMusic("play.ogg"));
 	al_set_sample_instance_playmode(bgm_instance, ALLEGRO_PLAYMODE_LOOP);
 	al_attach_sample_instance_to_mixer(bgm_instance, al_get_default_mixer());
@@ -63,6 +64,10 @@ void PlayScene::Initialize() {
 	setting->SetValue(std::bind(&PlayScene::BgmLower, this), 1);
 	setting->SetValue(std::bind(&PlayScene::SfxLouder, this), 2);
 	setting->SetValue(std::bind(&PlayScene::SfxLower, this), 3);
+	Log(Debug) << "Add 2 stone to package";
+	AddToPackage("Stone", 2);
+	Log(Debug) << "Add 3 wood to package";
+	AddToPackage("Wood", 3);
 }
 void PlayScene::Terminate() {
 }
@@ -160,7 +165,7 @@ void PlayScene::AddNewItemType(std::string name, std::string img) {
 void PlayScene::AddToPackage(std::string name, int amount) {
 	if (!items.count(name))
 		Log(Error) << "Item type " << name << " has not been added.";
-	bag->AddItem(name, amount);
+	bag->AddItem(items[name], amount);
 }
 Point PlayScene::RepositionWithPivot(Point p) {
 	return p - pivot;
