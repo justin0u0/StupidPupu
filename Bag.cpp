@@ -22,11 +22,27 @@ Bag::Bag() : Image("bag.png", 0, 0
 }
 void Bag::Draw() const {
 	Image::Draw();
-	for (int i = 0; i < Size; i++)
+	for (int i = 0; i < Size; i++) {
 		bag_cell[i].button->Draw();
+		if (i < package.size() && this->visible) {
+			bag_cell[i].img->Draw();
+			bag_cell[i].name->Draw();
+		}
+	}
 	for (int i = 0; i < MixSize; i++)
 		mix_cell[i].button->Draw();
 	mix_button->Draw();
+}
+void Bag::Update() {
+	int i = 0;
+	// sort item location again
+	for (auto m : package) {
+		float x = bag_cell[i].button->position.x;
+		float y = bag_cell[i].button->position.y;
+		bag_cell[i].img  = new Image(m.first->GetImage(), x, y, 130, 130, 0, 0); 
+		bag_cell[i].name = new Text(m.first->GetName(), "pirulen.ttf", 10, x + 65, y + 150, 255, 255, 255, 255, 0.5, 0.5); 
+		i++;
+	}
 }
 void Bag::OnMouseDown(int button, int mx, int my) {
 	for (int i = 0; i < Size; i++)
@@ -45,9 +61,11 @@ void Bag::OnMouseMove(int mx, int my) {
 void Bag::ReverseStatus() {
 	this->visible = !this->visible;
 	for (int i = 0; i < Size; i++) {
-//		item[i]->visible = !buttons[i]->visible;
+		if (i < package.size()) {
+			bag_cell[i].img->visible = !bag_cell[i].button->visible;
+			bag_cell[i].name->visible = !bag_cell[i].button->visible;
+		}
 		bag_cell[i].button->visible = !bag_cell[i].button->visible;
-//		info[i]->visible = !info[i]->visible;
 		bag_cell[i].button->enabled = !bag_cell[i].button->enabled;
 	}
 	for (int i = 0; i < MixSize; i++) {
@@ -62,10 +80,8 @@ void Bag::ReverseStatus() {
 bool Bag::Status() const {
 	return this->visible;
 }
-void Bag::AddItem(std::string name, int amount) {
-	if (package.count(name))
-		package.at(name) += amount;
-	else
-		package.insert(make_pair(name, amount));
+void Bag::AddItem(Item* item, int amount) {
+	package[item] += amount;
+	Update();
 }
 
