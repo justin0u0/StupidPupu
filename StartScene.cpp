@@ -15,7 +15,7 @@ void StartScene::Initialize() {
 	start_button = new ImageButton("start_button_out.png", "start_button_in.png", halfW, 650, 430, 130, 0.5, 0);
 	start_button->SetOnClick(std::bind(&StartScene::Start, this));
 	start_text = new Text("START", "Metrool.ttf", 95, halfW, 670, 0, 0, 0, 255, 0.5, 0);
-	bgm = Music::PlayBGM("LA.wav"); 
+	bgm = Music::PlayBGM("LA.ogg"); 
 }
 void StartScene::Terminate() {
 	Music::StopBGM(bgm);
