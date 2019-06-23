@@ -27,6 +27,22 @@ void PlayScene::Initialize() {
 	lands.back()->AddNewResourceType("Tree");
 	lands.back()->AddNewResourceType("Stone");
 	lands.back()->AddNewEnemyType("Slime");
+	// Add Items
+	AddNewItemType("Wood", "wood.png");
+	AddNewItemType("Stone", "stone.png");
+	AddNewItemType("Coal", "coal.png");
+	AddNewItemType("Iron", "iron.png");
+	AddNewItemType("Blueberry", "blueberry.png");
+	AddNewItemType("Redberry", "redberry.png");
+	AddNewItemType("Wood Pickaxe", "wood_pickaxe.png");
+	AddNewItemType("Stone Pickaxe", "stone_pickaxe.png");
+	AddNewItemType("Iron Pickaxe", "iron_pickaxe.png");
+	AddNewItemType("Slime Pickaxe", "slime_pickaxe.png");
+	AddNewItemType("Wood Sword", "wood_sword.png");
+	AddNewItemType("Stone Sword", "stone_sword.png");
+	AddNewItemType("Iron Sword", "iron_sword.png");
+	AddNewItemType("Heal Potion (once)", "red_potion.png");
+	AddNewItemType("Heal Potion (continuous)", "blue_potion");
 	// Create Setting
 	setting = new Setting();
 	bag = new Bag();
@@ -67,17 +83,21 @@ void PlayScene::Update(float deltaTime) {
 void PlayScene::OnKeyDown(int keycode) {
 	IScene::OnKeyDown(keycode);
 	if (keycode == ALLEGRO_KEY_ESCAPE) {
-		if (setting->Status())
-			Log(Debug) << "Close Setting";
-		else 
-			Log(Debug) << "Open Setting";
-		setting->ReverseStatus();
+		if (!bag->Status()) {
+			if (setting->Status())
+				Log(Debug) << "Close Setting";
+			else
+				Log(Debug) << "Open Setting";
+			setting->ReverseStatus();
+		}
 	} else if (keycode == ALLEGRO_KEY_Q) {
-		if (bag->Status())
-			Log(Debug) << "Close Bag";
-		else
-			Log(Debug) << "Open Bag";
-		bag->ReverseStatus();
+		if (!setting->Status()) {
+			if (bag->Status())
+				Log(Debug) << "Close Bag";
+			else
+				Log(Debug) << "Open Bag";
+			bag->ReverseStatus();		
+		}
 	}
 }
 void PlayScene::OnMouseDown(int button, int mx, int my) {
@@ -132,6 +152,17 @@ EnemyInfo& PlayScene::GetEnemyInfo(std::string name) {
 	if (!enemies.count(name))
 		Log(Error) << "Enemy type " << name << " has not been added.";
 	return enemies.at(name);
+}
+void PlayScene::AddNewItemType(std::string name, std::string img) {
+	if (items.count(name))
+		Log(Error) << "Cannot add same item type with same name";
+	items.insert(make_pair(name, new Item(name, img)));
+}
+void AddToPackage(std::string item, int amount) {
+//	if (package.count(item))
+//		package.at(item) += amount;
+//	else
+//		package.insert(make_pair(item, amount));
 }
 void PlayScene::RepositionWithPivot(Point& p) {
 	p -= pivot;
