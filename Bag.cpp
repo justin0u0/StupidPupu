@@ -62,4 +62,10 @@ void Bag::ReverseStatus() {
 bool Bag::Status() const {
 	return this->visible;
 }
+void Bag::AddItem(std::string name, int amount) {
+	if (package.count(name))
+		package.at(name) += amount;
+	else
+		package.insert(make_pair(name, amount));
+}
 

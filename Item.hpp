@@ -7,6 +7,8 @@ class Item {
 private:
 	std::string name;
 	std::string img;
+	int index;
+	int NewIndex();
 public:
 	explicit Item(std::string name, std::string img);
 };

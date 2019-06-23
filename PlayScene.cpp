@@ -160,14 +160,13 @@ EnemyInfo& PlayScene::GetEnemyInfo(std::string name) {
 }
 void PlayScene::AddNewItemType(std::string name, std::string img) {
 	if (items.count(name))
-		Log(Error) << "Cannot add same item type with same name";
+		Log(Error) << "Cannot add same item type with same name.";
 	items.insert(make_pair(name, new Item(name, img)));
 }
-void AddToPackage(std::string item, int amount) {
-//	if (package.count(item))
-//		package.at(item) += amount;
-//	else
-//		package.insert(make_pair(item, amount));
+void PlayScene::AddToPackage(std::string name, int amount) {
+	if (!items.count(name))
+		Log(Error) << "Item type " << name << " has not been added.";
+	bag->AddItem(name, amount);
 }
 Point PlayScene::RepositionWithPivot(Point p) {
 	return p - pivot;
