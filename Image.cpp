@@ -39,4 +39,7 @@ int Image::GetBitmapWidth() const {
 int Image::GetBitmapHeight() const {
 	return al_get_bitmap_height(bmp);
 }
+void Image::ChangeImage(std::string new_img) {
+	bmp = Loader::GetInstance().GetBitmap(new_img, size.x, size.y);
+}
 

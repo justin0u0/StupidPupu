@@ -12,6 +12,7 @@ public:
 	void Draw() const override;
 	int GetBitmapWidth() const;
 	int GetBitmapHeight() const;
+	void ChangeImage(std::string new_img);
 };
 #endif
 
