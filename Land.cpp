@@ -90,4 +90,10 @@ void Land::SpawnEnemy() {
 			, type.maximum_hp, type.damage, type.speed, type.detect_radius, type.attack_cooldown));
 	}
 }
+Point Land::LeftUpCorner() const {
+	return Point(real_position.x - size.x / 2, real_position.y - size.y / 2);
+}
+Point Land::RightDownCorner() const {
+	return Point(real_position.x + size.x / 2, real_position.y + size.y / 2); 
+}
 

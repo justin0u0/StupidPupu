@@ -80,6 +80,12 @@ void PlayScene::Draw() const {
 	setting->Draw();
 }
 void PlayScene::Update(float deltaTime) {
+//	Log(Debug) << "Pivot: " << pivot.x << ' ' << pivot.y;
+//	Log(Debug) << "Player(pos): " << player->position.x << ' ' << player->position.y;
+//	Log(Debug) << "Player(real): " << player->real_position.x << ' ' << player->real_position.y;
+//	Log(Debug) << "Land(pos): " << lands[0]->position.x << ' ' << lands[0]->position.y;
+//	Log(Debug) << "Land(real): " << lands[0]->real_position.x << ' ' << lands[0]->real_position.y;
+//	Log(Debug) << "Land Left Up(real)" << lands[0]->LeftUpCorner().x << ' ' << lands[0]->LeftUpCorner().y;
 	for (auto& land : lands)
 		land->Update(deltaTime);
 	player->Update(deltaTime);
