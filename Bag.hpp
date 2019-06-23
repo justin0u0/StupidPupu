@@ -9,6 +9,7 @@ struct BagCell {
 	Image* img;
 	ImageButton *button;
 	Text *amount, *name;
+	// Change Text: bag_cell[i].amount->ChangeText(std::to_string(new_amount));
 };
 
 class Bag : public Image , public IControl{
@@ -26,6 +27,7 @@ public:
 	void OnMouseMove(int mx, int my) override;	
 	void ReverseStatus();
 	bool Status() const;
+	void AddItem(std::string name, int amount);
 };
 #endif
 
