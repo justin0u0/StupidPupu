@@ -11,7 +11,7 @@ void SelectScene::Initialize() {
 		saves[i]->SetOnClick(std::bind(&SelectScene::Start, this));
 		start[i] = new Text("START", "Metrool.ttf", 128, dx * (i * 2 + 1), 550, 100, 200, 255, 255, 0.5, 0);
 	}
-	bgm = Music::PlayBGM("LA.wav");
+	bgm = Music::PlayBGM("LA.ogg");
 }
 void SelectScene::Terminate() {
 	Music::StopBGM(bgm);
