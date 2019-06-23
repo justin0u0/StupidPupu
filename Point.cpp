@@ -35,6 +35,14 @@ Point& Point::operator*=(const int& rhs) {
 Point& Point::operator*(const int& rhs) {
 	return (*this) *= rhs;
 }
+Point& Point::operator*=(const float& rhs) {
+	x *= rhs;
+	y *= rhs;
+	return *this;
+}
+Point& Point::operator*(const float& rhs) {
+	return (*this) *= rhs;
+}
 Point& Point::Round() {
 	x = std::round(x);
 	y = std::round(y);
