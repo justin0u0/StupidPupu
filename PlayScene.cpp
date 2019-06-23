@@ -22,6 +22,7 @@ void PlayScene::Initialize() {
 	lands.back()->AddNewResourceType("Tree");
 	lands.back()->AddNewResourceType("Stone");
 	setting = new Setting();
+	bag = new Bag();
 	// Create bgm
 	bgm_instance = al_create_sample_instance(Loader::GetInstance().GetMusic("play.ogg"));
 	al_set_sample_instance_playmode(bgm_instance, ALLEGRO_PLAYMODE_LOOP);
@@ -48,6 +49,7 @@ void PlayScene::Draw() const {
 	for (auto& land : lands)
 		land->Draw();
 	player->Draw();
+	bag->Draw();
 	setting->Draw();
 }
 void PlayScene::Update(float deltaTime) {
@@ -59,10 +61,16 @@ void PlayScene::OnKeyDown(int keycode) {
 	IScene::OnKeyDown(keycode);
 	if (keycode == ALLEGRO_KEY_ESCAPE) {
 		if (setting->Status())
-			Log(Info) << "Close Setting";
+			Log(Debug) << "Close Setting";
 		else 
-			Log(Info) << "Open Setting";
+			Log(Debug) << "Open Setting";
 		setting->ReverseStatus();
+	} else if (keycode == ALLEGRO_KEY_Q) {
+		if (bag->Status())
+			Log(Debug) << "Close Bag";
+		else
+			Log(Debug) << "Open Bag";
+		bag->ReverseStatus();
 	}
 }
 void PlayScene::OnMouseDown(int button, int mx, int my) {
