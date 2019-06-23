@@ -19,5 +19,6 @@ Point const operator+(Point const& lhs, Point const& rhs);
 Point const operator-(Point const& lhs, Point const& rhs);
 Point const operator*(Point const& lhs, int const& rhs);
 Point const operator*(Point const& lhs, float const& rhs);
+float Distance(Point const& lhs, Point const& rhs);
 #endif
 

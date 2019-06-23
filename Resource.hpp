@@ -6,9 +6,8 @@
 #include "Point.hpp"
 
 class Resource : public Sprite, public IControl {
-private:
-	Point real_position;
 public:
+	Point real_position;
 	// type of the resource
 	std::string type;
 	// health point of the resource

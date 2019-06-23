@@ -2,6 +2,7 @@
 #include "Player.hpp"
 #include "GameEngine.hpp"
 #include "PlayScene.hpp"
+#include "Collider.hpp"
 
 Player::Player(std::string img, float x, float y)
 	: Sprite(img, x, y, 50, 50), real_position(Point(x, y)) {
@@ -15,8 +16,20 @@ void Player::Update(float deltaTime) {
 	else if (game.IsRight())
 		flag = 0;
 	velocity = GetVelocity();
-	real_position += velocity * deltaTime;
-	position = dynamic_cast<PlayScene *>(game.GetActiveScene())->RepositionWithPivot(real_position);
+	PlayScene *playscene = dynamic_cast<PlayScene *>(game.GetActiveScene());
+	std::vector<Land *>& lands = playscene->lands;
+	Point next_position = real_position + velocity * deltaTime;
+	for (auto& land : lands) {
+		for (auto& resource : land->resources) {
+			if (Collider::CircleIntersect(Point(next_position.x, real_position.y), hitbox_radius, resource->real_position, resource->hitbox_radius))
+				next_position.x = real_position.x;
+			if (Collider::CircleIntersect(Point(real_position.x, next_position.y), hitbox_radius, resource->real_position, resource->hitbox_radius))
+				next_position.y = real_position.y;
+		}
+	}
+	playscene->pivot += (next_position - real_position);
+	real_position = next_position;
+	position = playscene->RepositionWithPivot(real_position);
 }
 Point Player::GetVelocity() const {
 	GameEngine& game = GameEngine::GetInstance();

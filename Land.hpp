@@ -10,6 +10,7 @@
 #include "Enemy.hpp"
 
 class Land : public Sprite {
+	friend class Player;
 private:
 	const int Size = 16;
 	const int Capacity = Size * Size / 2;
