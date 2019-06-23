@@ -8,6 +8,7 @@
 #include "Player.hpp"
 #include "ResourceInfo.hpp"
 #include "Setting.hpp"
+#include "Bag.hpp"
 #include "EnemyInfo.hpp"
 
 class PlayScene final : public IScene {
@@ -18,6 +19,7 @@ private:
 	Player* player;
 	ALLEGRO_SAMPLE_INSTANCE *bgm_instance, *sfx_instance;
 	Setting *setting;
+	Bag *bag;
 public:
 	void Initialize() override;
 	void Terminate() override;
