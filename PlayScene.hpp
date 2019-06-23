@@ -44,7 +44,7 @@ public:
 		, int hp, int dmg, float speed, float radius, float cooldown, int universality);
 	EnemyInfo& GetEnemyInfo(std::string name);
 	void AddNewItemType(std::string name, std::string img);
-	void AddToPackage(std::string item, int amount);
+	void AddToPackage(std::string name, int amount);
 	Point RepositionWithPivot(Point p);
 };
 #endif
