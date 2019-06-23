@@ -43,4 +43,7 @@ Point const operator*(Point const& lhs, int const& rhs) {
 Point const operator*(Point const& lhs, float const& rhs) {
 	return Point(lhs) *= rhs;
 }
+float distance(Point const& lhs, Point const& rhs) {
+	return sqrt((lhs.x - rhs.x) * (lhs.x - rhs.x) + (lhs.y - rhs.y) * (lhs.y - rhs.y));
+}
 
