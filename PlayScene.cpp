@@ -13,6 +13,8 @@
 void PlayScene::Initialize() {
 	int halfW = GameEngine::GetInstance().GetScreenWidth() / 2;
 	int halfH = GameEngine::GetInstance().GetScreenHeight() / 2;
+	// Set Pivot
+	pivot = Point(0, 0);
 	// Create Player
 	player = new Player("ghost_transparent.png", halfW, halfH);
 	// Add resources
@@ -58,6 +60,7 @@ void PlayScene::Draw() const {
 	setting->Draw();
 }
 void PlayScene::Update(float deltaTime) {
+	GameEngine& game = GameEngine::GetInstance();
 	for (auto& land : lands)
 		land->Update(deltaTime);
 	player->Update(deltaTime);
@@ -130,8 +133,5 @@ EnemyInfo& PlayScene::GetEnemyInfo(std::string name) {
 	if (!enemies.count(name))
 		Log(Error) << "Enemy type " << name << " has not been added.";
 	return enemies.at(name);
-}
-Player* PlayScene::GetPlayer() const {
-	return player;
 }
 

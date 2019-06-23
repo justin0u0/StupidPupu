@@ -10,9 +10,11 @@
 #include "Setting.hpp"
 #include "Bag.hpp"
 #include "EnemyInfo.hpp"
+#include "Point.hpp"
 
 class PlayScene final : public IScene {
 private:
+	Point pivot;
 	std::vector<Land *> lands;
 	std::unordered_map<std::string, ResourceInfo> resources;
 	std::unordered_map<std::string, EnemyInfo> enemies;
@@ -37,7 +39,6 @@ public:
 	void AddNewEnemyType(std::string name, std::string img, float w, float h
 		, int hp, int dmg, float speed, float radius, float cooldown, int universality);
 	EnemyInfo& GetEnemyInfo(std::string name);
-	Player* GetPlayer() const;
 };
 #endif
 
