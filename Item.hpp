@@ -6,11 +6,11 @@
 
 class Item {
 private:
-	std::string name;
 	std::string img;
 	int index;
 	int NewIndex();
 public:
+	std::string name;
 	explicit Item(std::string name, std::string img);
 	Item(const Item&) = default;
 	Item& operator=(const Item&) = default;
