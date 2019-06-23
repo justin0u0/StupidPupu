@@ -75,7 +75,6 @@ void PlayScene::Draw() const {
 	setting->Draw();
 }
 void PlayScene::Update(float deltaTime) {
-	pivot += player->GetVelocity() * deltaTime;
 	for (auto& land : lands)
 		land->Update(deltaTime);
 	player->Update(deltaTime);

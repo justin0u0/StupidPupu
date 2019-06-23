@@ -15,8 +15,6 @@
 
 class PlayScene final : public IScene {
 private:
-	Point pivot;
-	std::vector<Land *> lands;
 	std::unordered_map<std::string, ResourceInfo> resources;
 	std::unordered_map<std::string, EnemyInfo> enemies;
 	std::unordered_map<std::string, Item *> items; // item name, img name
@@ -25,6 +23,8 @@ private:
 	Setting *setting;
 	Bag *bag;
 public:
+	Point pivot;
+	std::vector<Land *> lands;
 	void Initialize() override;
 	void Terminate() override;
 	void Draw() const override;
