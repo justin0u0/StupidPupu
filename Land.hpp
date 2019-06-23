@@ -11,11 +11,12 @@
 
 class Land : public Sprite {
 	friend class Player;
+	friend class Enemy;
 private:
+	Point real_position;
 	const int Size = 16;
 	const int Capacity = Size * Size / 2;
 	float spawn_cooldown = 0.0;
-	Point real_position;
 	// Resources
 	std::vector<std::vector<bool>> land_state = std::vector<std::vector<bool>>(Size, std::vector<bool>(Size));
 	std::vector<ResourceInfo> resource_types;
@@ -38,6 +39,8 @@ public:
 	void Spawn(float deltaTime);
 	void SpawnResource();
 	void SpawnEnemy();
+	Point LeftUpCorner() const;
+	Point RightDownCorner() const;
 };
 #endif
 
