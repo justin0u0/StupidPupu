@@ -6,26 +6,22 @@
 #include "ImageButton.hpp"
 #include "Text.hpp"
 #include "Item.hpp"
+#include "BagCell.hpp"
+#include <vector>
 
-struct BagCell {
-	Image* img;
-	ImageButton *button;
-	Text *amount, *name;
-	// Change Text: bag_cell[i].amount->ChangeText(std::to_string(new_amount));
-};
-
-class Bag : public Image , public IControl{
+class Bag : public Image , public IControl {
 private:
-	static const int Size = 20;
-	static const int MixSize = 3;
+	const int Size = 20; // bag_cell size
+	const int MixSize = 3; // mix_cell size
   	ImageButton *mix_button;
   	std::map<Item *, int> package; // (item name, total amount)
+  	
 public:
-	BagCell bag_cell[Size];
-	BagCell mix_cell[MixSize];
+	std::vector<BagCell> bag_cell;
 	explicit Bag();
 	void Draw() const override;
-	void Update();
+	void BagUpdate();
+	void MixUpdate(int id);
 	void OnMouseDown(int button, int mx, int my) override;
 	void OnMouseMove(int mx, int my) override;	
 	void ReverseStatus();
