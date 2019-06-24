@@ -75,7 +75,7 @@ void PlayScene::Initialize() {
 	AddToPackage("Wood", 3);
 	
 	// Testings 2
-	player->ChangeTool(new Tool("Wood Pickaxe", "wood_pickaxe.png", 50, 50, 100, 9, 5, 3));
+	player->ChangeTool(new Tool("Wood Pickaxe", "wood_pickaxe.png", 50, 50, 100, 9, 5, 0.8));
 }
 void PlayScene::Terminate() {
 }
@@ -121,10 +121,12 @@ void PlayScene::OnKeyDown(int keycode) {
 void PlayScene::OnMouseDown(int button, int mx, int my) {
 	setting->OnMouseDown(button, mx, my);
 	bag->OnMouseDown(button, mx, my);
+	player->OnMouseDown(button, mx, my);
 }
 void PlayScene::OnMouseMove(int mx, int my) {
 	setting->OnMouseMove(mx, my);
 	bag->OnMouseMove(mx, my);
+	player->OnMouseMove(mx, my);
 }
 void PlayScene::BgmLouder() {
 	float volume = setting->bgm_value + 0.1;

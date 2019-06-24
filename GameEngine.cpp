@@ -230,6 +230,11 @@ Point GameEngine::GetMousePosition() const {
 	al_get_mouse_state(&state);
 	return Point(state.x, state.y);
 }
+bool GameEngine::IsMouseDown() const {
+	ALLEGRO_MOUSE_STATE state;
+	al_get_mouse_state(&state);
+	return (state.buttons & 1);
+}
 bool GameEngine::IsKeyDown(int keycode) const {
 	ALLEGRO_KEYBOARD_STATE state;
 	al_get_keyboard_state(&state);

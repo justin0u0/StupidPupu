@@ -55,6 +55,8 @@ public:
 	int GetScreenHeight() const;
 	// Mouse position
 	Point GetMousePosition() const;
+	// Mouse click
+	bool IsMouseDown() const;
 	// Is key with keycode pressed
 	bool IsKeyDown(int keycode) const;
 	// Is pressing key left or 'a'
