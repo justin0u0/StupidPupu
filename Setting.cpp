@@ -1,5 +1,6 @@
 #include <string>
 #include <cmath>
+#include <fstream>
 #include "GameEngine.hpp"
 #include "Setting.hpp"
 #include "Music.hpp"
@@ -11,18 +12,19 @@ Setting::Setting() : Image("settings.png", GameEngine::GetInstance().GetScreenWi
 	int set_y = GameEngine::GetInstance().GetScreenHeight() / 2;
 	int set_w = GetBitmapWidth(); // 400
 	int set_h = GetBitmapHeight(); // 500
-	bgm_value = 1.0;
-	sfx_value = 1.0;
+	std::fstream file;
+	file.open("assets/volume.txt", std::ios_base::in);
+	file >> bgm_value >> sfx_value;
 	// music bgm
 	labels[0] = new Text("BGM", "pirulen.ttf", 24, set_x - 150, set_y - 200, 0, 0, 0, 255, 0.5, 0.5);
 	buttons[1] = new ImageButton("bgm_lower_out.png", "bgm_lower_in.png", set_x - 50, set_y -200, 50, 50, 0.5, 0.5);
 	buttons[0] = new ImageButton("bgm_louder_out.png", "bgm_louder_in.png", set_x + 150, set_y - 200, 50, 50, 0.5, 0.5);
-	labels[1] = new Text("100 %", "pirulen.ttf", 24, set_x + 50, set_y - 200, 0, 0, 0, 255, 0.5, 0.5);
+	labels[1] = new Text(std::to_string(static_cast<int>(round(bgm_value * 100))) + " %", "pirulen.ttf", 24, set_x + 50, set_y - 200, 0, 0, 0, 255, 0.5, 0.5);
 	// music sfx
 	labels[2] = new Text("SFX", "pirulen.ttf", 24, set_x - 150, set_y - 120, 0, 0, 0, 255, 0.5, 0.5);
 	buttons[3] = new ImageButton("bgm_lower_out.png", "bgm_lower_in.png", set_x - 50, set_y - 120, 50, 50, 0.5, 0.5);
 	buttons[2] = new ImageButton("bgm_louder_out.png", "bgm_louder_in.png", set_x + 150, set_y -120, 50, 50, 0.5, 0.5);
-	labels[3] = new Text("100 %", "pirulen.ttf", 24, set_x + 50, set_y - 120, 0, 0, 0, 255, 0.5, 0.5);
+	labels[3] = new Text(std::to_string(static_cast<int>(round(sfx_value * 100))) + " %", "pirulen.ttf", 24, set_x + 50, set_y - 120, 0, 0, 0, 255, 0.5, 0.5);
 	if (Status())
 		ReverseStatus();
 }

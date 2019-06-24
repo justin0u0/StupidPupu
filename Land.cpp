@@ -39,7 +39,8 @@ void Land::Draw() const {
 void Land::Update(float deltaTime) {
 	Spawn(deltaTime);
 	GameEngine& game = GameEngine::GetInstance();
-	position = dynamic_cast<PlayScene *>(game.GetActiveScene())->RepositionWithPivot(real_position);
+	PlayScene* playscene = dynamic_cast<PlayScene *>(game.GetActiveScene());
+	position = playscene->RepositionWithPivot(real_position);
 	for (auto& resource : resources)
 		resource->Update(deltaTime);
 	for (auto& enemy : enemies)

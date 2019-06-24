@@ -4,6 +4,7 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_acodec.h>
 #include <chrono>
+#include <fstream>
 #include <algorithm>
 
 #include "PlayScene.hpp"
@@ -77,6 +78,9 @@ void PlayScene::Initialize() {
 	player->ChangeTool(new Tool("Wood Pickaxe", "wood_pickaxe.png", 50, 50, 100, 9, 5, 0.8));
 }
 void PlayScene::Terminate() {
+	std::fstream file;
+	file.open("assets/volume.txt", std::ios_base::out | std::ios_base::trunc);
+	file << setting->bgm_value << ' ' << setting->sfx_value;
 }
 void PlayScene::Draw() const {
 	al_clear_to_color(al_map_rgb(70, 150, 255));
