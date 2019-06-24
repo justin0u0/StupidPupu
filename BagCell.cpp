@@ -6,7 +6,7 @@
 BagCell::BagCell(int id, float x, float y) {
 	button = new ImageButton("square_out.png", "square_in.png", x, y, 130, 130);
 	img = new Image("square_out.png", x, y, 130, 130, 0, 0);
-	name = new Text("", "pirulen.ttf", 10, x + 65, y + 150, 255, 255, 255, 255, 0.5, 0.5);
+	name = new Text("", "pirulen.ttf", 5, x + 65, y + 150, 255, 255, 255, 255, 0.5, 0.5);
 	amount = new Text("", "pirulen.ttf", 10, x + 130, y + 100, 255, 255, 255, 255, 0, 0);
 	img_name = "square_out.png";
 	is_empty = true;
