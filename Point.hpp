@@ -14,6 +14,7 @@ struct Point {
 	Point& operator-=(const Point& rhs);
 	Point& operator*=(const int& rhs);
 	Point& operator*=(const float& rhs);
+	void Unit();
 };
 Point const operator+(Point const& lhs, Point const& rhs);
 Point const operator-(Point const& lhs, Point const& rhs);
