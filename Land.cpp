@@ -40,11 +40,31 @@ void Land::Update(float deltaTime) {
 	Spawn(deltaTime);
 	GameEngine& game = GameEngine::GetInstance();
 	position = dynamic_cast<PlayScene *>(game.GetActiveScene())->RepositionWithPivot(real_position);
-	for (auto& resource : resources) {
+	for (auto& resource : resources)
 		resource->Update(deltaTime);
-	}
-	for (auto& enemy : enemies) {
+	for (auto& enemy : enemies)
 		enemy->Update(deltaTime);
+	for (auto it = resources.begin(); it != resources.end(); ) {
+		auto next_it = it;
+		// resource died
+		if ((*it)->health < 0) {
+			Log(Debug) << "Resource died.";
+			next_it = resources.erase(it);
+		} else {
+			next_it++;
+		}
+		it = next_it;
+	}
+	for (auto it = enemies.begin(); it != enemies.end(); ) {
+		auto next_it = it;
+		// enemy died
+		if ((*it)->health < 0) {
+			Log(Debug) << "Enemy died.";
+			next_it = enemies.erase(it);
+		} else {
+			next_it++;
+		}
+		it = next_it;
 	}
 }
 void Land::AddNewResourceType(std::string name) {
