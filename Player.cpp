@@ -3,6 +3,7 @@
 #include "GameEngine.hpp"
 #include "PlayScene.hpp"
 #include "Collider.hpp"
+#include "Music.hpp"
 
 Player::Player(std::string img, float x, float y)
 	: Sprite(img, x, y, 50, 50), real_position(Point(x, y)) {
@@ -79,6 +80,7 @@ void Player::Update(float deltaTime) {
 				&& Collider::PointInCircle(Point(mouse.x, mouse.y), resource->position, resource->hitbox_radius)) {
 				Log(Verbose) << "Player click resource at: (" << mouse.x << ',' << mouse.y << ')';
 				resource->health -= tool->resource_damage;
+				Music::PlayAudio("click.wav");
 			}
 		}
 		for (auto enemy : land->enemies) {
@@ -86,6 +88,7 @@ void Player::Update(float deltaTime) {
 				&& Collider::PointInCircle(Point(mouse.x, mouse.y), enemy->position, enemy->hitbox_radius)) {
 				Log(Verbose) << "Player click enemy at: (" << mouse.x << ',' << mouse.y << ')';
 				enemy->health -= tool->enemy_damage;
+				Music::PlayAudio("click.wav");
 			}
 		}
 	}
