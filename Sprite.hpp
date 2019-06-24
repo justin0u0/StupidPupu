@@ -3,6 +3,7 @@
 
 #include "Image.hpp"
 
+// Image that supports rotaion, velocity, tint and collision radius
 class Sprite : public Image {
 public:
 	// Rotation angle in radians
