@@ -47,7 +47,6 @@ void PlayScene::Initialize() {
 	setting = new Setting();
 	bag = new Bag();
 	// Create bgm
-	Log(Debug) << "Hi";
 	bgm_instance = al_create_sample_instance(Loader::GetInstance().GetMusic("play.ogg"));
 	al_set_sample_instance_playmode(bgm_instance, ALLEGRO_PLAYMODE_LOOP);
 	al_attach_sample_instance_to_mixer(bgm_instance, al_get_default_mixer());

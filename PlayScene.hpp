@@ -21,9 +21,9 @@ private:
 	Player* player;
 	ALLEGRO_SAMPLE_INSTANCE *bgm_instance, *sfx_instance;
 	Setting *setting;
-	Bag *bag;
 public:
 	Point pivot;
+	Bag *bag;
 	std::vector<Land *> lands;
 	void Initialize() override;
 	void Terminate() override;
