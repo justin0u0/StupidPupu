@@ -8,16 +8,17 @@
 #include "Item.hpp"
 #include "BagCell.hpp"
 #include <vector>
+#include <map>
 
-class Bag : public Image , public IControl {
+class Bag : public Image, public IControl {
 private:
 	const int Size = 20; // bag_cell size
 	const int MixSize = 3; // mix_cell size
   	ImageButton *mix_button;
-  	std::map<Item *, int> package; // (item name, total amount)
+  	std::map<Item *, std::pair<int, std::string>> package; // (item name, total amount)
   	
 public:
-	std::vector<BagCell> bag_cell;
+	std::vector<BagCell *> bag_cell;
 	explicit Bag();
 	void Draw() const override;
 	void BagUpdate();
