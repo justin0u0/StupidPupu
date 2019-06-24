@@ -31,6 +31,11 @@ Point& Point::operator*=(const float& rhs) {
 	y *= rhs;
 	return *this;
 }
+void Point::Unit() {
+	float length = sqrt(this->x * this->x + this->y * this->y);
+	this->x /= length;
+	this->y /= length;
+}
 Point const operator+(Point const& lhs, Point const& rhs) {
 	return Point(lhs) += rhs;
 }

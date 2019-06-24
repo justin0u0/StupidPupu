@@ -6,13 +6,23 @@
 #include "Collider.hpp"
 
 Enemy::Enemy(std::string img, float x, float y, float w, float h
-	, int health, int damage, float speed, float detect_radius, float attack_cooldown)
+	, int health, int damage, float speed, float detect_radius, float attack_speed)
 	: Sprite(img, x, y, w, h), real_position(Point(x, y)), health(health), damage(damage)
-	, speed(speed), detect_radius(detect_radius), attack_cooldown(attack_cooldown) {
+	, speed(speed), detect_radius(detect_radius), attack_speed(attack_speed) {
+	attack_cooldown = 0.0;
 }
 void Enemy::Update(float deltaTime) {
+	// Decide enemy next direction & speed
 	change_direction_cooldown -= deltaTime;
-	if (change_direction_cooldown < 0) {
+	attack_cooldown -= deltaTime;
+	PlayScene *playscene = dynamic_cast<PlayScene *>(GameEngine::GetInstance().GetActiveScene());
+	if (attack_cooldown < 0 && Distance(playscene->player->position, position) < detect_radius) {
+		attack_cooldown = attack_speed;
+		velocity = playscene->player->position - position;
+		velocity.Unit();
+		velocity *= speed * 5;
+		change_direction_cooldown = 1.0;
+	} else if (change_direction_cooldown < 0) {
 		change_direction_cooldown = Random::GetRandom().Float(3, 5);
 		velocity.x = Random::GetRandom().Float(-1, 1);
 		velocity.y = sqrt(1 - velocity.x * velocity.x);
@@ -20,12 +30,13 @@ void Enemy::Update(float deltaTime) {
 			velocity.y *= -1;
 		velocity *= speed;
 	}
+	// enemy direction
 	if (velocity.x > 0)
 		flag = ALLEGRO_FLIP_HORIZONTAL;
 	else
 		flag = 0;
+	// enemy collide with others
 	Point next_position = real_position + velocity * deltaTime;
-	PlayScene *playscene = dynamic_cast<PlayScene *>(GameEngine::GetInstance().GetActiveScene());
 	std::vector<Land *>& lands = playscene->lands;
 	for (auto& land : lands) {
 		for (auto& resource : land->resources) {

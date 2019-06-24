@@ -9,6 +9,7 @@
 #include "PlayScene.hpp"
 #include "GameEngine.hpp"
 #include "Music.hpp"
+#include "Collider.hpp"
 
 void PlayScene::Initialize() {
 	int halfW = GameEngine::GetInstance().GetScreenWidth() / 2;
@@ -21,13 +22,13 @@ void PlayScene::Initialize() {
 	AddNewResourceType("Tree", "tree_transparent.png", 100, 10);
 	AddNewResourceType("Stone", "resource_stone.png", 300, 9);
 	// Add enemies
-	AddNewEnemyType("Slime", "slime.png", 50, 50, 100, 1, 30, 50, 60, 10);
+	AddNewEnemyType("Slime", "slime.png", 50, 50, 60, 1, 30, 150, 5, 10);
 	// Add lands and corresponding resources
 	lands.emplace_back(new Land("land_advanced.png", halfW, halfH));
 	lands.back()->AddNewResourceType("Tree");
 	lands.back()->AddNewResourceType("Stone");
 	lands.back()->AddNewEnemyType("Slime");
-	// Add Items
+	// Add Tools
 	AddNewItemType("Wood Pickaxe", "wood_pickaxe.png");
 	AddNewItemType("Stone Pickaxe", "stone_pickaxe.png");
 	AddNewItemType("Iron Pickaxe", "iron_pickaxe.png");
@@ -35,10 +36,12 @@ void PlayScene::Initialize() {
 	AddNewItemType("Wood Sword", "wood_sword.png");
 	AddNewItemType("Stone Sword", "stone_sword.png");
 	AddNewItemType("Iron Sword", "iron_sword.png");
+	// Add Foods
 	AddNewItemType("Blueberry", "blueberry.png");
 	AddNewItemType("Redberry", "redberry.png");
 	AddNewItemType("Heal Potion (once)", "red_potion.png");
 	AddNewItemType("Heal Potion (continuous)", "blue_potion");
+	// Add Materials
 	AddNewItemType("Wood", "wood.png");
 	AddNewItemType("Stone", "stone.png");
 	AddNewItemType("Coal", "coal.png");
@@ -63,10 +66,15 @@ void PlayScene::Initialize() {
 	setting->SetValue(std::bind(&PlayScene::BgmLower, this), 1);
 	setting->SetValue(std::bind(&PlayScene::SfxLouder, this), 2);
 	setting->SetValue(std::bind(&PlayScene::SfxLower, this), 3);
+	
+	// Testings 1
 	Log(Debug) << "Add 2 stone to package";
 	AddToPackage("Stone", 2);
 	Log(Debug) << "Add 3 wood to package";
 	AddToPackage("Wood", 3);
+	
+	// Testings 2
+	player->ChangeTool(new Tool("Wood Pickaxe", "wood_pickaxe.png", 50, 50, 100, 9, 5, 0.8));
 }
 void PlayScene::Terminate() {
 }
@@ -74,6 +82,8 @@ void PlayScene::Draw() const {
 	al_clear_to_color(al_map_rgb(70, 150, 255));
 	for (auto& land : lands)
 		land->Draw();
+	al_draw_rectangle(2, 2, 202, 42, al_map_rgb(0, 0, 0), 4);
+	al_draw_filled_rectangle(4, 4, 202.0 * player->health / player->maximum_health - 2, 40, al_map_rgb(255, 0, 0));
 	player->Draw();
 	bag->Draw();
 	setting->Draw();
@@ -112,10 +122,12 @@ void PlayScene::OnKeyDown(int keycode) {
 void PlayScene::OnMouseDown(int button, int mx, int my) {
 	setting->OnMouseDown(button, mx, my);
 	bag->OnMouseDown(button, mx, my);
+	player->OnMouseDown(button, mx, my);
 }
 void PlayScene::OnMouseMove(int mx, int my) {
 	setting->OnMouseMove(mx, my);
 	bag->OnMouseMove(mx, my);
+	player->OnMouseMove(mx, my);
 }
 void PlayScene::BgmLouder() {
 	float volume = setting->bgm_value + 0.1;
@@ -152,10 +164,10 @@ ResourceInfo& PlayScene::GetResourceInfo(std::string name) {
 	return resources.at(name);
 }
 void PlayScene::AddNewEnemyType(std::string name, std::string img, float w, float h
-	, int hp, int dmg, float speed, float radius, float cooldown, int universality) {
+	, int hp, int dmg, float speed, float radius, float atk_speed, int universality) {
 	if (enemies.count(name))
 		Log(Error) << "Cannot add same enemy type with same name";
-	enemies.insert(make_pair(name, EnemyInfo(name, img, w, h, hp, dmg, speed, radius, cooldown, universality)));
+	enemies.insert(make_pair(name, EnemyInfo(name, img, w, h, hp, dmg, speed, radius, atk_speed, universality)));
 }
 EnemyInfo& PlayScene::GetEnemyInfo(std::string name) {
 	if (!enemies.count(name))
@@ -171,6 +183,15 @@ void PlayScene::AddToPackage(std::string name, int amount) {
 	if (!items.count(name))
 		Log(Error) << "Item type " << name << " has not been added.";
 	bag->AddItem(items[name], amount);
+}
+Land* PlayScene::GetPlayerLand() const {
+	for (auto& land : lands) {
+		if (Collider::PointInRectangle(player->position, land->LeftUpCorner(), land->RightDownCorner())) {
+			return land;
+		}
+	}
+	Log(Error) << "Player is not on any land";
+	return nullptr;
 }
 Point PlayScene::RepositionWithPivot(Point p) {
 	return p - pivot;
