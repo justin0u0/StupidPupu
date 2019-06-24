@@ -22,12 +22,16 @@ void PlayScene::Initialize() {
 	// Add resources
 	AddNewResourceType("Tree", "tree_transparent.png", 100, 10);
 	AddNewResourceType("Stone", "resource_stone.png", 300, 9);
+	AddNewResourceType("Red Bush", "red_bush.png", 100, 10);
+	AddNewResourceType("Iron", "resource_iron.png", 400, 8);
 	// Add enemies
 	AddNewEnemyType("Slime", "slime.png", 50, 50, 60, 1, 30, 150, 5, 10);
 	// Add lands and corresponding resources
 	lands.emplace_back(new Land("land_advanced.png", halfW, halfH));
 	lands.back()->AddNewResourceType("Tree");
 	lands.back()->AddNewResourceType("Stone");
+	lands.back()->AddNewResourceType("Red Bush");
+	lands.back()->AddNewResourceType("Iron");
 	lands.back()->AddNewEnemyType("Slime");
 	// Add Tools
 	AddNewItemType("Wood Pickaxe", "wood_pickaxe.png");
@@ -35,13 +39,13 @@ void PlayScene::Initialize() {
 	AddNewItemType("Iron Pickaxe", "iron_pickaxe.png");
 	AddNewItemType("Slime Pickaxe", "slime_pickaxe.png");
 	AddNewItemType("Wood Sword", "wood_sword.png");
-	AddNewItemType("Stone Sword", "stone_sword.png");
+	AddNewItemType("S-Sword", "stone_sword.png");
 	AddNewItemType("Iron Sword", "iron_sword.png");
 	// Add Foods
 	AddNewItemType("Blueberry", "blueberry.png");
 	AddNewItemType("Redberry", "redberry.png");
-	AddNewItemType("Heal Potion (once)", "red_potion.png");
-	AddNewItemType("Heal Potion (continuous)", "blue_potion");
+	AddNewItemType("R-Potion", "red_potion.png");
+	AddNewItemType("Heal Potion", "blue_potion");
 	// Add Materials
 	AddNewItemType("Wood", "wood.png");
 	AddNewItemType("Stone", "stone.png");
@@ -73,9 +77,11 @@ void PlayScene::Initialize() {
 	AddToPackage("Stone", 2);
 	Log(Debug) << "Add 3 wood to package";
 	AddToPackage("Wood", 3);
-	
+	AddToPackage("Redberry", 4);
+	AddToPackage("S-Sword", 1);
+	AddToPackage("R-Potion", 2);
 	// Testings 2
-	player->ChangeTool(new Tool("Wood Pickaxe", "wood_pickaxe.png", 50, 50, 100, 9, 5, 0.8));
+	player->ChangeTool(new Tool("Slime Pickaxe", "slime_pickaxe.png", 50, 50, 100, 49, 10, 0.8));
 }
 void PlayScene::Terminate() {
 	std::fstream file;
