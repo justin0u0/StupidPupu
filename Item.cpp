@@ -10,9 +10,6 @@ int Item::NewIndex() {
 bool Item::operator<(const Item& rhs) {
 	return index < rhs.index;
 }
-std::string Item::GetName() const {
-	return name;
-}
 std::string Item::GetImage() const {
 	return img;
 }
