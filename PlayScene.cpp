@@ -83,6 +83,8 @@ void PlayScene::Draw() const {
 	al_clear_to_color(al_map_rgb(70, 150, 255));
 	for (auto& land : lands)
 		land->Draw();
+	al_draw_rectangle(2, 2, 202, 42, al_map_rgb(0, 0, 0), 4);
+	al_draw_filled_rectangle(4, 4, 202.0 * player->health / player->maximum_health - 2, 40, al_map_rgb(255, 0, 0));
 	player->Draw();
 	bag->Draw();
 	setting->Draw();

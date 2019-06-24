@@ -6,6 +6,11 @@
 
 Player::Player(std::string img, float x, float y)
 	: Sprite(img, x, y, 50, 50), real_position(Point(x, y)) {
+	health = 50;
+	maximum_health = 50;
+	protect_cooldown = 3.0;
+	tint_flag = false;
+	tint_cooldown = 0;
 }
 void Player::OnMouseDown(int button, int mx, int my) {
 }
@@ -16,6 +21,18 @@ void Player::Draw() const {
 	tool->Draw();
 }
 void Player::Update(float deltaTime) {
+	protect_cooldown -= deltaTime;
+	tint_cooldown -= deltaTime;
+	// player tint
+	if (protect_cooldown > 0) {
+		tint = (tint_flag ? al_map_rgba(255, 0, 0, 100) : al_map_rgba(255, 255, 255, 100));
+		if (tint_cooldown < 0) {
+			tint_flag ^= 1;
+			tint_cooldown = 0.5;
+		}
+	} else {
+		tint = al_map_rgba(255, 255, 255, 255);
+	}
 	GameEngine& game = GameEngine::GetInstance();
 	// player direction
 	if (game.GetMousePosition().x < position.x)
@@ -40,10 +57,17 @@ void Player::Update(float deltaTime) {
 		next_position.y = std::max(next_position.y, land->LeftUpCorner().y + size.y / 2);
 		next_position.y = std::min(next_position.y, land->RightDownCorner().y - size.y / 2);
 	}
-	// update position
 	playscene->pivot += (next_position - real_position);
 	real_position = next_position;
 	position = playscene->RepositionWithPivot(real_position);
+	// get attacked
+	for (auto& enemy : land->enemies) {
+		if (protect_cooldown < 0 && Collider::CircleIntersect(position, hitbox_radius, enemy->position, enemy->hitbox_radius)) {
+			Log(Debug) << "Player get attack.";
+			protect_cooldown = 2.0;
+			health -= enemy->damage;
+		}
+	}
 	// tool update
 	if (game.IsMouseDown() && tool->cooldown <= 0) {
 		Point mouse = game.GetMousePosition();
