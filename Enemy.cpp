@@ -6,9 +6,9 @@
 #include "Collider.hpp"
 
 Enemy::Enemy(std::string img, float x, float y, float w, float h
-	, int health, int damage, float speed, float detect_radius, float attack_speed)
+	, int health, int damage, float speed, float detect_radius, float attack_speed, std::string item)
 	: Sprite(img, x, y, w, h), real_position(Point(x, y)), health(health), damage(damage)
-	, speed(speed), detect_radius(detect_radius), attack_speed(attack_speed) {
+	, speed(speed), detect_radius(detect_radius), attack_speed(attack_speed) , item(item) {
 	attack_cooldown = 0.0;
 }
 void Enemy::Update(float deltaTime) {

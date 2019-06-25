@@ -15,8 +15,9 @@ private:
 public:
 	int health;
 	int damage;
+	std::string item;
 	explicit Enemy(std::string img, float x, float y, float w, float h
-		, int health, int damage, float speed, float detect_radius, float attack_cooldown);
+		, int health, int damage, float speed, float detect_radius, float attack_cooldown, std::string item);
 	void Update(float deltaTime) override;
 };
 #endif

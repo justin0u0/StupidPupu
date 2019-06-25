@@ -14,8 +14,9 @@ struct EnemyInfo {
 	float detect_radius;
 	float attack_cooldown;
 	int universality;
+	std::string item;
 	explicit EnemyInfo(std::string type, std::string img, float w, float h, int maximum_hp
-		, int damage, float speed, float detect_radius, float attack_cooldown, int universality);
+		, int damage, float speed, float detect_radius, float attack_cooldown, int universality, std::string item);
 	EnemyInfo(const EnemyInfo&) = default;
 	EnemyInfo& operator=(const EnemyInfo&) = default;
 };
