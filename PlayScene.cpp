@@ -20,12 +20,12 @@ void PlayScene::Initialize() {
 	// Create Player
 	player = new Player("ghost_transparent.png", halfW, halfH);
 	// Add resources
-	AddNewResourceType("Tree", "tree_transparent.png", 100, 10);
-	AddNewResourceType("Stone", "resource_stone.png", 300, 9);
-	AddNewResourceType("Red Bush", "red_bush.png", 100, 10);
-	AddNewResourceType("Iron", "resource_iron.png", 400, 8);
+	AddNewResourceType("Tree", "tree_transparent.png", 100, 10, "Wood");
+	AddNewResourceType("Stone", "resource_stone.png", 300, 9, "Stone");
+	AddNewResourceType("Red Bush", "red_bush.png", 100, 10, "Redberry");
+	AddNewResourceType("Iron", "resource_iron.png", 400, 8, "Iron");
 	// Add enemies
-	AddNewEnemyType("Slime", "slime.png", 50, 50, 60, 1, 30, 150, 5, 10);
+	AddNewEnemyType("Slime", "slime.png", 50, 50, 60, 1, 30, 150, 5, 10, "Slime");
 	// Add lands and corresponding resources
 	lands.emplace_back(new Land("land_advanced.png", halfW, halfH));
 	lands.back()->AddNewResourceType("Tree");
@@ -51,6 +51,7 @@ void PlayScene::Initialize() {
 	AddNewItemType("Stone", "stone.png");
 	AddNewItemType("Coal", "coal.png");
 	AddNewItemType("Iron", "iron.png");
+	AddNewItemType("Slime", "slime_item.png");
 	// Create Setting
 	setting = new Setting();
 	bag = new Bag();
@@ -72,14 +73,14 @@ void PlayScene::Initialize() {
 	setting->SetValue(std::bind(&PlayScene::SfxLouder, this), 2);
 	setting->SetValue(std::bind(&PlayScene::SfxLower, this), 3);
 	
-	// Testings 1
-	Log(Debug) << "Add 2 stone to package";
-	AddToPackage("Stone", 2);
-	Log(Debug) << "Add 3 wood to package";
-	AddToPackage("Wood", 3);
-	AddToPackage("Redberry", 4);
-	AddToPackage("S-Sword", 1);
-	AddToPackage("R-Potion", 2);
+//	// Testings 1
+//	Log(Debug) << "Add 2 stone to package";
+//	AddToPackage("Stone", 2);
+//	Log(Debug) << "Add 3 wood to package";
+//	AddToPackage("Wood", 3);
+//	AddToPackage("Redberry", 4);
+//	AddToPackage("S-Sword", 1);
+//	AddToPackage("R-Potion", 2);
 	// Testings 2
 	player->ChangeTool(new Tool("Slime Pickaxe", "slime_pickaxe.png", 50, 50, 100, 49, 10, 0.8));
 }
@@ -163,10 +164,10 @@ void PlayScene::SfxLower() {
 	al_set_sample_instance_gain(sfx_instance, setting->sfx_value);
 	Music::sfx_volume = setting->sfx_value;
 }
-void PlayScene::AddNewResourceType(std::string name, std::string img, int hp, int universality) {
+void PlayScene::AddNewResourceType(std::string name, std::string img, int hp, int universality, std::string item) {
 	if (resources.count(name))
 		Log(Error) << "Cannot add same resource type with same name";
-	resources.insert(make_pair(name, ResourceInfo(name, img, hp, universality)));
+	resources.insert(make_pair(name, ResourceInfo(name, img, hp, universality, item)));
 }
 ResourceInfo& PlayScene::GetResourceInfo(std::string name) {
 	if (!resources.count(name))
@@ -174,10 +175,10 @@ ResourceInfo& PlayScene::GetResourceInfo(std::string name) {
 	return resources.at(name);
 }
 void PlayScene::AddNewEnemyType(std::string name, std::string img, float w, float h
-	, int hp, int dmg, float speed, float radius, float atk_speed, int universality) {
+	, int hp, int dmg, float speed, float radius, float atk_speed, int universality, std::string item) {
 	if (enemies.count(name))
 		Log(Error) << "Cannot add same enemy type with same name";
-	enemies.insert(make_pair(name, EnemyInfo(name, img, w, h, hp, dmg, speed, radius, atk_speed, universality)));
+	enemies.insert(make_pair(name, EnemyInfo(name, img, w, h, hp, dmg, speed, radius, atk_speed, universality, item)));
 }
 EnemyInfo& PlayScene::GetEnemyInfo(std::string name) {
 	if (!enemies.count(name))

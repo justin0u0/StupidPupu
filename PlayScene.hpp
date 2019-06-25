@@ -38,10 +38,10 @@ public:
 	void SfxLouder();
 	void SfxLower();
 	// For Resource
-	void AddNewResourceType(std::string name, std::string img, int hp, int universality);
+	void AddNewResourceType(std::string name, std::string img, int hp, int universality, std::string item);
 	ResourceInfo& GetResourceInfo(std::string name);
 	void AddNewEnemyType(std::string name, std::string img, float w, float h
-		, int hp, int dmg, float speed, float radius, float atk_speed, int universality);
+		, int hp, int dmg, float speed, float radius, float atk_speed, int universality, std::string item);
 	EnemyInfo& GetEnemyInfo(std::string name);
 	void AddNewItemType(std::string name, std::string img);
 	void AddToPackage(std::string name, int amount);

@@ -45,11 +45,12 @@ void Land::Update(float deltaTime) {
 		resource->Update(deltaTime);
 	for (auto& enemy : enemies)
 		enemy->Update(deltaTime);
-	for (auto it = resources.begin(); it != resources.end(); ) {
+	for (auto it = resources.begin(); it != resources.end(); ) { 
 		auto next_it = it;
 		// resource died
 		if ((*it)->health < 0) {
 			Log(Debug) << "Resource died.";
+			playscene->AddToPackage((*it)->item, 2);
 			next_it = resources.erase(it);
 		} else {
 			next_it++;
@@ -61,6 +62,7 @@ void Land::Update(float deltaTime) {
 		// enemy died
 		if ((*it)->health < 0) {
 			Log(Debug) << "Enemy died.";
+			playscene->AddToPackage((*it)->item, 2);
 			next_it = enemies.erase(it);
 		} else {
 			next_it++;
@@ -96,7 +98,7 @@ void Land::SpawnResource() {
 		Log(Verbose) << "Land spawning a " << type.type;
 		Point p = NewSpawnPoint();
 		Log(Verbose) << "SpawnPoint: " << p.x << ' ' << p.y;
-		resources.emplace_back(new Resource(type.img, p.x, p.y, type.maximum_hp));
+		resources.emplace_back(new Resource(type.img, p.x, p.y, type.maximum_hp, type.item));
 	}
 }
 void Land::SpawnEnemy() {
@@ -108,7 +110,7 @@ void Land::SpawnEnemy() {
 		Point p = NewSpawnPoint();
 		Log(Verbose) << "SpawnPoint: " << p.x << ' ' << p.y;
 		enemies.emplace_back(new Enemy(type.img, p.x, p.y, type.size.x, type.size.y
-			, type.maximum_hp, type.damage, type.speed, type.detect_radius, type.attack_cooldown));
+			, type.maximum_hp, type.damage, type.speed, type.detect_radius, type.attack_cooldown, type.item));
 	}
 }
 Point Land::LeftUpCorner() const {
