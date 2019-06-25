@@ -12,7 +12,9 @@ public:
 	std::string type;
 	// health point of the resource
 	int health;
-	explicit Resource(std::string img, float x, float y, int health);
+	// the item correspond to resource
+	std::string item;
+	explicit Resource(std::string img, float x, float y, int health, std::string item);
 	Resource(const Resource&) = default;
 	Resource& operator=(const Resource&) = default;
 	void Update(float deltaTime) override;

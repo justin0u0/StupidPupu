@@ -13,7 +13,9 @@ struct ResourceInfo {
 	// the universality of this type of resource
 	// the higher the value, the more this type of resource appear
 	int universality;
-	explicit ResourceInfo(std::string type, std::string img, int maximum_hp, int universality);
+	// the item correspond to the resource
+	std::string item;
+	explicit ResourceInfo(std::string type, std::string img, int maximum_hp, int universality, std::string item);
 	ResourceInfo(const ResourceInfo&) = default;
 	ResourceInfo& operator=(const ResourceInfo&) = default;
 };
